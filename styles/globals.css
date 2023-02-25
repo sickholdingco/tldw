@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    @apply text-white;
+  }
+
+  body {
+    @apply bg-[#2d2d2d];
+    @apply font-sans;
+  }
+}
+
+/* a,
+.btn {
+  @apply transition-colors duration-200;
+  @apply hover:text-secondary;
+} */
+
+.gradient-text {
+  @apply text-transparent bg-clip-text;
+  @apply bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-pink-500;
+}
