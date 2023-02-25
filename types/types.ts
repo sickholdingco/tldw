@@ -22,8 +22,5 @@ export type VideoType = {
 }
 
 export type AWSResponseType = {
-  result: {
-    vids: VideoType[];
-    numBlocks: number;
-  }
+  videos: VideoType[];
 };

@@ -4,9 +4,6 @@ import { useGetSummary } from "./hooks/useGetSummary";
 export const Search = () => {
   const [searchInput, setSearchInput] = useState("");
 
-  // eslint-disable-next-line no-console
-  console.log(`🦄🦄🦄🦄 ${Date.now().toString()} searchInput: ${JSON.stringify(searchInput, null, 4)}`);
-
   const { data, isLoading, isError, isFetching, refetch } = useGetSummary(searchInput);
 
   const onSubmit = async (e: React.SyntheticEvent) => {

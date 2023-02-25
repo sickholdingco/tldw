@@ -7,6 +7,8 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const summarizeVideos = async (videos: VideoType[]): Promise<VideoSummary[]> => {
+  console.log("in summarizeVideos")
+  console.log(videos)
   const videoSummaries: VideoSummary[] = await Promise.all(videos.map(async (video) => {
     return {
       videoId: video.id,
