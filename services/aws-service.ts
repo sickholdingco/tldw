@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+import { VideoType } from "../types/types";
 
 AWS.config.update({
 	region: process.env.AWS_REGION,
@@ -8,10 +9,11 @@ AWS.config.update({
 
 const lambda = new AWS.Lambda();
 
-const generateTranscript = async (url: string) => {
+const generateTranscript = async (searchTerm: string): Promise<VideoType[]> => {
+	
 	const params = {
 		FunctionName: 'youtube-transcript',
-		Payload: JSON.stringify({ url: url }),
+		Payload: JSON.stringify({ searchTerm }),
 	};
 	const result = await lambda.invoke(params).promise();
 	const transcript = JSON.parse(result.Payload as string);
