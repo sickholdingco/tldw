@@ -20,7 +20,3 @@ export type VideoType = {
   thumbnail: string;
   blocks: string[];
 }
-
-export type AWSResponseType = {
-  videos: VideoType[];
-};

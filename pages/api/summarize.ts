@@ -9,9 +9,7 @@ type Data = {
 
 const summarize = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const awsTranscriptResponse = await AwsService.generateTranscript(req.body.searchTerm);
-  console.log("in summarize")
-  console.log(awsTranscriptResponse)
-  const openAiSummaryResponse = await OpenAIService.summarizeVideos(awsTranscriptResponse.videos);
+  const openAiSummaryResponse = await OpenAIService.summarizeVideos(awsTranscriptResponse);
 
   res.status(200).json({ summaries: openAiSummaryResponse });
 };

@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { AWSResponseType, UseGetSummaryResponseType, VideoSummary } from "../../../types/types";
+import { UseGetSummaryResponseType } from "../../../types/types";
 
 export const useGetSummary = (searchTerm: string) => {  
 
@@ -15,13 +15,12 @@ export const useGetSummary = (searchTerm: string) => {
           body: JSON.stringify({ searchTerm }),
         })
       ).json();
-      
+      console.log(response)
       return {
         data: response,
         status: "SUCCESS"
       } as UseGetSummaryResponseType
     } catch (err) {
-      console.log(err)
       return {
         data: [],
         status: "FAILURE"
