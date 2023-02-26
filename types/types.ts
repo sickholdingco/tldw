@@ -3,7 +3,7 @@ export type OpenAIResponseType = {
 };
 
 export type UseGetSummaryResponseType = {
-  data: VideoSummary[];
+  videoSummaries: VideoSummary[];
   status: "SUCCESS" | "FAILURE";
 };
 

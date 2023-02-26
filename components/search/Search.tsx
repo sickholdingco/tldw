@@ -43,7 +43,7 @@ export const Search = () => {
           </div>
         </div>
 
-        {data && <Output videoSummaries={data.data} />}
+        {data && <Output videoSummaries={data.videoSummaries} />}
 
         <button
           className="w-full bg-product-purple rounded-lg py-5 text-[16px] font-medium leading-none"

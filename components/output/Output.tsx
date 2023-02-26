@@ -7,6 +7,9 @@ interface OutputProps {
 }
 
 export const Output = ({ videoSummaries }: OutputProps) => {  
+  // eslint-disable-next-line no-console
+  console.log(`🦄🦄🦄🦄 ${Date.now().toString()} videoSummaries: ${JSON.stringify(videoSummaries, null, 4)}`);
+  
   return (
    <div>
       {videoSummaries.map((videoSummary, index) => {

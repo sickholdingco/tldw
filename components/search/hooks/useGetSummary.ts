@@ -1,11 +1,12 @@
 import { useQuery } from "react-query";
+import { SummarizeResponse } from "../../../pages/api/summarize";
 import { UseGetSummaryResponseType } from "../../../types/types";
 
 export const useGetSummary = (searchTerm: string) => {  
 
   const fetchData = async () => {
     try {
-      const response = await (
+      const response: SummarizeResponse = await (
         await fetch("/api/summarize", {
           method: "POST",
           headers: {
@@ -16,14 +17,14 @@ export const useGetSummary = (searchTerm: string) => {
       ).json();
       console.log(response)
       return {
-        data: response,
+        videoSummaries: response.summaries,
         status: "SUCCESS"
       } as UseGetSummaryResponseType
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(err);
       return {
-        data: [],
+        videoSummaries: [],
         status: "FAILURE"
       } as UseGetSummaryResponseType
     }
