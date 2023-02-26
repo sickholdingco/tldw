@@ -6,14 +6,16 @@ import { Search } from '../components/search/Search'
 
 const Home: NextPage = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className="flex min-h-screen flex-col py-2">
       <Head>
-        <title>Create Next App</title>
+        <title>tldw</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-       <Search />
+      <main className="flex w-full flex-1 flex-col px-20 py-12 text-center">
+        <div className="flex w-full justify-center">
+          <Search />
+        </div>
       </main>
 
       <footer className="flex h-24 w-full items-center justify-center">

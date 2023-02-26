@@ -4,7 +4,6 @@ import { UseGetSummaryResponseType } from "../../../types/types";
 export const useGetSummary = (searchTerm: string) => {  
 
   const fetchData = async () => {
-
     try {
       const response = await (
         await fetch("/api/summarize", {
@@ -21,6 +20,8 @@ export const useGetSummary = (searchTerm: string) => {
         status: "SUCCESS"
       } as UseGetSummaryResponseType
     } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
       return {
         data: [],
         status: "FAILURE"
