@@ -4,12 +4,16 @@ import OpenAIService from "../../services/openai-service";
 import { VideoSummary } from "../../types/types";
 
 type Data = {
-  summaries: VideoSummary[]
-}
+  summaries: VideoSummary[];
+};
 
 const summarize = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const awsTranscriptResponse = await AwsService.generateTranscript(req.body.searchTerm);
-  const openAiSummaryResponse = await OpenAIService.summarizeVideos(awsTranscriptResponse);
+  const awsTranscriptResponse = await AwsService.generateTranscript(
+    req.body.searchTerm,
+  );
+  const openAiSummaryResponse = await OpenAIService.summarizeVideos(
+    awsTranscriptResponse,
+  );
 
   res.status(200).json({ summaries: openAiSummaryResponse });
 };

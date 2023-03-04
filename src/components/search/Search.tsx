@@ -4,31 +4,35 @@ import { useGetSummary } from "./hooks/useGetSummary";
 export const Search = () => {
   const [searchInput, setSearchInput] = useState("");
 
-  const { data, isLoading, isError, isFetching, refetch } = useGetSummary(searchInput);
+  const { data, isLoading, isError, isFetching, refetch } =
+    useGetSummary(searchInput);
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     refetch();
   };
-  
+
   return (
-    <div className="w-full flex justify-start items-center">
-      <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
+    <div className="flex w-full items-center justify-start">
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <div className="flex flex-col gap-[5px]">
           <textarea
             className="form-control
+          border-product-purple
+          m-0
           block
           w-full
-          px-4
-          py-2
+          rounded-lg
+          border
+          border-solid
+          bg-[#2d2d2d] px-4 py-2
           text-[16px]
           font-normal
-          bg-[#2d2d2d]
-          border border-solid border-product-purple
-          rounded-lg
           transition
           ease-in-out
-          m-0
           focus:outline-none
           "
             placeholder="search me as if it were youtube"
@@ -38,11 +42,16 @@ export const Search = () => {
             rows={1}
           />
         </div>
-          <button
-          className="w-full bg-product-purple rounded-lg py-5 text-[16px] font-medium leading-none"
+        <button
+          className="bg-product-purple w-full rounded-lg py-5 text-[16px] font-medium leading-none"
           type="button"
-          onClick={onSubmit}>
-          {isLoading || isFetching ? <span>loading...</span> : <span>search</span>}
+          onClick={onSubmit}
+        >
+          {isLoading || isFetching ? (
+            <span>loading...</span>
+          ) : (
+            <span>search</span>
+          )}
         </button>
       </form>
     </div>

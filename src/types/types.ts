@@ -19,4 +19,4 @@ export type VideoType = {
   title: string;
   thumbnail: string;
   blocks: string[];
-}
+};

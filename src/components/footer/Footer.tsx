@@ -2,8 +2,6 @@ import Image from "next/image";
 import Github from "./Github";
 import Twitter from "./Twitter";
 
-import gradient from "/public/gradient.jpeg"
-
 export const Footer = () => {
   const links = [
     {
@@ -19,22 +17,27 @@ export const Footer = () => {
   ];
 
   return (
-    <div className="relative w-full flex items-center h-20 mt-10 pb-6 px-24">
-      <div className="w-full flex justify-start items-center">
-        <Image src={gradient} alt="gradient logo" className="h-5 w-5 rounded-full" />
-        <p className="pl-2 text-xs hidden md:flex ">an shco production</p>
-        <p className="pl-2 text-xs hidden smMax:flex">shco</p>
+    <div className="relative mt-10 flex h-20 w-full items-center px-24 pb-6">
+      <div className="flex w-full items-center justify-start">
+        <Image
+          src="/gradient.jpeg"
+          alt="gradient logo"
+          className="h-5 w-5 rounded-full"
+        />
+        <p className="hidden pl-2 text-xs md:flex ">an shco production</p>
+        <p className="smMax:flex hidden pl-2 text-xs">shco</p>
       </div>
 
-      <div className="w-full flex justify-center">
+      <div className="flex w-full justify-center">
         <ul className="relative grid grid-cols-2 gap-4 sm:grid-cols-2">
           {links.map((link) => (
             <li key={link.url}>
               <a
-                className="flex items-center justify-center w-6 h-6"
+                className="flex h-6 w-6 items-center justify-center"
                 href={link.url}
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 <span className="sr-only">{link.description}</span>
                 {link.icon}
               </a>
@@ -42,8 +45,8 @@ export const Footer = () => {
           ))}
         </ul>
       </div>
-      
-      <div className="w-full hidden sm:flex" />
+
+      <div className="hidden w-full sm:flex" />
     </div>
   );
 };
