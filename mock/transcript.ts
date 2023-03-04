@@ -1,4 +1,4 @@
-export default {
+export const transcript = {
   summaries: [
     {
       videoId: "5l0uuXDCbRI",

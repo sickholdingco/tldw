@@ -19,7 +19,7 @@ export const Search = () => {
         onSubmit={(e) => e.preventDefault()}
       >
         <div className="flex flex-col gap-[5px]">
-          <textarea
+          <input
             className="form-control
           border-product-purple
           m-0
@@ -39,7 +39,6 @@ export const Search = () => {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             id="url-input"
-            rows={1}
           />
         </div>
         <button
