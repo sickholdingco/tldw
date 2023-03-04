@@ -3,11 +3,15 @@ import AwsService from "../../services/aws-service";
 import OpenAIService from "../../services/openai-service";
 import { VideoSummary } from "../../types/types";
 
-type Data = {
+interface Data {
   summaries: VideoSummary[];
-};
+}
 
-const summarize = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+interface Request extends NextApiRequest {
+  body: { searchTerm: string };
+}
+
+const summarize = async (req: Request, res: NextApiResponse<Data>) => {
   const awsTranscriptResponse = await AwsService.generateTranscript(
     req.body.searchTerm,
   );
