@@ -1,4 +1,4 @@
-import transcript from "mock/transcript";
+import transcript from "mock/summaries";
 import { NextApiRequest, NextApiResponse } from "next";
 import AwsService from "../../services/aws-service";
 import OpenAIService from "../../services/openai-service";
@@ -22,7 +22,7 @@ const summarize = async (req: Request, res: NextApiResponse<Data>) => {
     awsTranscriptResponse,
   );
   */
-  res.status(200).json({ summaries: transcript as unknown as VideoSummary[] });
+  res.status(200).json({ summaries: transcript });
 };
 
 export default summarize;

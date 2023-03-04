@@ -1,4 +1,6 @@
-export const transcript = [
+import { VideoSummary } from "@/types/types";
+
+export const summaries: VideoSummary[] = [
   {
     videoId: "bblqcSNGt7A",
     title:
@@ -66,4 +68,4 @@ export const transcript = [
   },
 ];
 
-export default transcript;
+export default summaries;
