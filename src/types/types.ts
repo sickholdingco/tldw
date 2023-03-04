@@ -13,6 +13,7 @@ export interface VideoSummary {
   videoId: string;
   title: string;
   thumbnail: string;
+  blocks: string[];
   summaries: ChatCompletionResponseMessage[];
 }
 

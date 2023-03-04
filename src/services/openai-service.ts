@@ -20,6 +20,7 @@ const summarizeVideos = async (
         videoId: video.id,
         title: video.title,
         thumbnail: video.thumbnail,
+        blocks: video.blocks,
         summaries: await Promise.all(
           video.blocks.map(async (block) => {
             const summary = await summarizeBlock(block);
