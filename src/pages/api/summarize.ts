@@ -11,6 +11,7 @@ const summarize = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const awsTranscriptResponse = await AwsService.generateTranscript(
     req.body.searchTerm,
   );
+  console.log(awsTranscriptResponse)
   const openAiSummaryResponse = await OpenAIService.summarizeVideos(
     awsTranscriptResponse,
   );
