@@ -6,6 +6,7 @@ specifiers:
   '@types/react-dom': 18.0.6
   autoprefixer: ^10.4.12
   aws-sdk: ^2.1323.0
+  exponential-backoff: ^3.1.1
   next: latest
   openai: ^3.2.1
   postcss: ^8.4.18
@@ -19,6 +20,7 @@ specifiers:
 
 dependencies:
   aws-sdk: 2.1323.0
+  exponential-backoff: 3.1.1
   next: 13.2.3_biqbaboplfbrettd7655fr4n2y
   openai: 3.2.1
   react: 18.2.0
@@ -465,6 +467,10 @@ packages:
   /events/1.1.1:
     resolution: {integrity: sha512-kEcvvCBByWXGnZy6JUlgAp2gBIUjfCAV6P6TgT1/aaQKcmuAEC4OZTV1I4EWQLz2gxZw76atuVyvHhTxvi0Flw==}
     engines: {node: '>=0.4.x'}
+    dev: false
+
+  /exponential-backoff/3.1.1:
+    resolution: {integrity: sha512-dX7e/LHVJ6W3DE1MHWi9S1EYzDESENfLrYohG2G++ovZrYOkm4Knwa0mc1cn84xJOR4KEU0WSchhLbd0UklbHw==}
     dev: false
 
   /fast-glob/3.2.12:
