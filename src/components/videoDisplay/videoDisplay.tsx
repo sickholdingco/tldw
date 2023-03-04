@@ -2,7 +2,7 @@ import * as Separator from "@radix-ui/react-separator";
 import { summaries } from "../../../mock/summaries";
 import YoutubeEmbed from "@/components/youtubeEmbed/youtubeEmbed";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { clsx } from "clsx";
 
 const videoDisplay = () => {
