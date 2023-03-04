@@ -23,6 +23,8 @@ export const Footer = () => {
           src="/gradient.jpeg"
           alt="gradient logo"
           className="h-5 w-5 rounded-full"
+          width={20}
+          height={20}
         />
         <p className="hidden pl-2 text-xs md:flex ">an shco production</p>
         <p className="smMax:flex hidden pl-2 text-xs">shco</p>
