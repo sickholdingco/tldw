@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import { VideoType } from "../types/types";
+import { VideoType } from "../../types/types";
 
 AWS.config.update({
   region: process.env.AWS_REGION,

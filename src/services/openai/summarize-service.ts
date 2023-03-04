@@ -3,8 +3,8 @@ import {
   Configuration,
   OpenAIApi,
 } from "openai";
-import { VideoSummary, VideoType } from "../types/types";
-import { backOff } from "./backOff";
+import { VideoSummary, VideoType } from "../../types/types";
+import { backOff } from "../utils/backOff";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
