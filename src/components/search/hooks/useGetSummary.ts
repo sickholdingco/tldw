@@ -1,10 +1,8 @@
 import { useQuery } from "react-query";
 import { UseGetSummaryResponseType } from "../../../types/types";
 
-export const useGetSummary = (searchTerm: string) => {  
-
+export const useGetSummary = (searchTerm: string) => {
   const fetchData = async () => {
-
     try {
       const response = await (
         await fetch("/api/summarize", {
@@ -15,16 +13,16 @@ export const useGetSummary = (searchTerm: string) => {
           body: JSON.stringify({ searchTerm }),
         })
       ).json();
-      console.log(response)
+      console.log(response);
       return {
         data: response,
-        status: "SUCCESS"
-      } as UseGetSummaryResponseType
+        status: "SUCCESS",
+      } as UseGetSummaryResponseType;
     } catch (err) {
       return {
         data: [],
-        status: "FAILURE"
-      } as UseGetSummaryResponseType
+        status: "FAILURE",
+      } as UseGetSummaryResponseType;
     }
   };
 
