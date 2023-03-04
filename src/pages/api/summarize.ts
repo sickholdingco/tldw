@@ -1,7 +1,7 @@
 import transcript from "mock/summaries";
 import { NextApiRequest, NextApiResponse } from "next";
-import AwsService from "../../services/aws-service";
-import OpenAIService from "../../services/openai-service";
+import AwsService from "../../services/aws/aws-service";
+import OpenAIService from "../../services/openai/summarize-service";
 import { VideoSummary } from "../../types/types";
 
 interface Data {
