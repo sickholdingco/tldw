@@ -16,6 +16,7 @@ specifiers:
   eslint: ^8.34.0
   eslint-config-next: ^13.2.1
   exponential-backoff: ^3.1.1
+  husky: ^8.0.3
   next: latest
   openai: ^3.2.1
   postcss: ^8.4.18
@@ -50,6 +51,7 @@ devDependencies:
   autoprefixer: 10.4.13_postcss@8.4.21
   eslint: 8.35.0
   eslint-config-next: 13.2.3_ddvlikdjy3uujmudifwl7fbpl4
+  husky: 8.0.3
   postcss: 8.4.21
   prettier: 2.8.4
   prettier-plugin-tailwindcss: 0.2.4_prettier@2.8.4
@@ -1778,6 +1780,12 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       function-bind: 1.1.1
+
+  /husky/8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
 
   /ieee754/1.1.13:
     resolution: {integrity: sha512-4vf7I2LYV/HaWerSo3XmlMkp5eZ83i+/CDluXi/IGTs/O1sejBNhTtnxzmRZfvOUqj7lZjqHkeTvpgSFDlWZTg==}

@@ -1,6 +1,6 @@
 import "../styles/index.css";
 
-import { AppProps } from "next/app";
+// import { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
