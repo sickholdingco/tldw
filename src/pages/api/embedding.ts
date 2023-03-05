@@ -1,9 +1,11 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { CreateEmbeddingResponse } from "openai";
+import { embeddingQuestion } from "mock/embeddingResponses";
+import summaries from "mock/summaries";
+import { type NextApiRequest, type NextApiResponse } from "next";
+import { type CreateEmbeddingResponse } from "openai";
 import EmbeddingService from "../../services/openai/embedding-service";
 
 interface Data {
-  name: CreateEmbeddingResponse;
+  name: string;
 }
 
 interface Request extends NextApiRequest {
@@ -14,7 +16,17 @@ const embedding = async (req: Request, res: NextApiResponse<Data>) => {
   const embeddingResponse = await EmbeddingService.generateEmbedding(
     req.body.question,
   );
-  res.status(200).json({ name: embeddingResponse });
+
+  // const blocks = summaries.flatMap((summary) => {
+  //   return summary.blocks;
+  // });
+
+  // const response = await EmbeddingService.getClosestBlockForQuestion(
+  //   embeddingQuestion,
+  //   blocks,
+  // );
+
+  res.status(200).json({ name: "name" });
 };
 
 export default embedding;

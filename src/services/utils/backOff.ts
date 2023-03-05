@@ -10,7 +10,7 @@ export const backOff = async <T>(
   return await exponentialBackOff(
     () => request(),
     options ?? {
-      numOfAttempts: 4,
+      numOfAttempts: 10,
       maxDelay: 10000,
       retry: () => {
         console.log("🦄🦄🦄🦄 retrying... 🦄🦄🦄🦄");

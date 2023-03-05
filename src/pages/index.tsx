@@ -3,6 +3,7 @@ import Head from "next/head";
 import { Footer } from "../components/footer/Footer";
 import { Search } from "../components/search/Search";
 import VideoDisplay from "@/components/videoDisplay/videoDisplay";
+import { Chat } from "@/components/chat/Chat";
 
 const Home: NextPage = () => {
   return (
@@ -13,7 +14,8 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="flex w-full flex-1 flex-col px-20">
-        <VideoDisplay />
+        {/* <VideoDisplay /> */}
+        <Chat />
       </main>
 
       <footer className="flex h-24 w-full items-center justify-center">
