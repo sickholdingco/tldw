@@ -1,9 +1,9 @@
 import {
-  ChatCompletionResponseMessage,
+  type ChatCompletionResponseMessage,
   Configuration,
   OpenAIApi,
 } from "openai";
-import { VideoSummary, VideoType } from "../../types/types";
+import { type VideoSummary, type VideoType } from "../../types/types";
 import { backOff } from "../utils/backOff";
 
 const configuration = new Configuration({
@@ -23,8 +23,11 @@ const summarizeVideos = async (
         blocks: video.blocks,
         summaries: await Promise.all(
           video.blocks.map(async (block) => {
-            const summary = await summarizeBlock(block);
-            return summary;
+            const summary = await summarizeBlock(block.text);
+            return {
+              blockId: block.blockId,
+              summary,
+            };
           }),
         ),
       };
@@ -41,7 +44,7 @@ const summarizeBlock = async (
 
   const completion = await backOff(() => createCompletion(prompt));
 
-  if (completion.data.choices[0].message) {
+  if (completion?.data?.choices[0]?.message) {
     return completion.data.choices[0].message;
   }
 

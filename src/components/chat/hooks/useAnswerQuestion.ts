@@ -1,30 +1,30 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useQuery } from "react-query";
-import { UseGetSummaryResponseType } from "../../../types/types";
 
-export const useGetSummary = (searchTerm: string) => {
+export const useAnswerQuestion = (question: string) => {
   const fetchData = async () => {
     try {
       const response = await (
-        await fetch("/api/summarize", {
+        await fetch("/api/embedding", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ searchTerm }),
+          body: JSON.stringify({ question }),
         })
       ).json();
       console.log(response);
       return {
         data: response,
         status: "SUCCESS",
-      } as UseGetSummaryResponseType;
+      } as any;
     } catch (err) {
       return {
         data: [],
         status: "FAILURE",
-      } as UseGetSummaryResponseType;
+      } as any;
     }
   };
 
