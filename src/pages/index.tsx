@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Footer } from "../components/footer/Footer";
-import { Search } from "../components/search/Search";
+import { Footer } from "@/components/footer/Footer";
 import VideoDisplay from "@/components/videoDisplay/videoDisplay";
 
 const Home: NextPage = () => {

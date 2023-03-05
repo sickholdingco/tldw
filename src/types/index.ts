@@ -1,4 +1,4 @@
-import { ChatCompletionResponseMessage } from "openai";
+import type { ChatCompletionResponseMessage } from "openai";
 
 export type OpenAIResponseType = {
   result: string;
