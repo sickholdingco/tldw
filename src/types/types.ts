@@ -10,12 +10,12 @@ export type UseGetSummaryResponseType = {
 };
 
 export interface Block {
-  blockId: string;
+  blockId: number;
   text: string;
 }
 
 export interface Summary {
-  blockId: string;
+  blockId: number;
   summary: ChatCompletionResponseMessage;
 }
 
