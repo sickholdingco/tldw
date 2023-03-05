@@ -10,8 +10,7 @@ export const summarizeRouter = createTRPCRouter({
     .query(async ({ input }) => {
       try {
         return {
-          data: summaries,
-          status: "SUCCESS",
+          summaries: summaries,
         };
       } catch (err) {
         throw new TRPCError({

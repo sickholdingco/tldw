@@ -12,9 +12,9 @@ export const embeddingRouter = createTRPCRouter({
         const embeddingResponse = await EmbeddingService.generateEmbedding(
           "big poopie",
         );
+
         return {
-          data: embeddingResponse,
-          status: "SUCCESS",
+          embedding: embeddingResponse,
         };
       } catch (err) {
         throw new TRPCError({
