@@ -3,7 +3,7 @@ import {
   Configuration,
   OpenAIApi,
 } from "openai";
-import { type VideoSummary, type VideoType } from "@/types/types";
+import type { VideoSummary, VideoType } from "@/types";
 import { backOff } from "../utils/backOff";
 
 const configuration = new Configuration({

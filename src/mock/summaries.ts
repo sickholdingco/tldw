@@ -1,4 +1,4 @@
-import { VideoSummary } from "@/types/types";
+import type { VideoSummary } from "@/types";
 
 export const summaries: VideoSummary[] = [
   {
