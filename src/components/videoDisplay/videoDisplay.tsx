@@ -32,7 +32,7 @@ const videoDisplay = () => {
 
       <div className="flex w-full justify-center gap-3 max-md:flex-col-reverse max-md:items-center">
         <div className="flex w-full max-w-[50%] flex-col gap-10 text-left max-md:max-w-full">
-          {transcript.summaries[selected].summaries.map((s) => (
+          {summaries[selected].summaries.map((s) => (
             <p>{s.content}</p>
           ))}
         </div>
