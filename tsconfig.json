@@ -21,6 +21,7 @@
     }
   },
   "include": [
+    "tailwind.config.js",
     ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",
