@@ -3,11 +3,7 @@ module.exports = {
   "**/*.(ts|tsx)": () => "pnpm tsc --noEmit",
 
   // Lint & Prettify TS and JS files
-  "**/*.(ts|tsx|js)": (filenames) => [
+  "**/*.(ts|tsx|cjs|mjs|md|json)": (filenames) => [
     `pnpm prettier --write ${filenames.join(" ")}`,
   ],
-
-  // Prettify only Markdown and JSON files
-  "**/*.(md|json)": (filenames) =>
-    `pnpm prettier --write ${filenames.join(" ")}`,
 };
