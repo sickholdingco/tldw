@@ -10,7 +10,8 @@
     "start": "next start",
     "format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\" --ignore-path .gitignore",
     "lint": "next lint",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-scroll-area": "^1.0.2",
