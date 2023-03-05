@@ -20,7 +20,7 @@ const videoDisplay = () => {
             }}
             className={clsx(
               selected === i
-                ? "border-2 border-red-700"
+                ? "border-2 border-red-700 max-md:hidden"
                 : "border-2 border-transparent",
               "rounded-lg",
             )}
@@ -29,14 +29,15 @@ const videoDisplay = () => {
           </button>
         ))}
       </div>
-      <div className="flex w-full justify-center gap-3">
-        <div className="flex w-full max-w-[50%] flex-col gap-10 text-left">
+
+      <div className="flex w-full justify-center gap-3 max-md:flex-col-reverse max-md:items-center">
+        <div className="flex w-full max-w-[50%] flex-col gap-10 text-left max-md:max-w-full">
           {summaries[selected].summaries.map((s) => (
             <p>{s.content}</p>
           ))}
         </div>
         <Separator.Root orientation="vertical" className="w-px bg-red-700" />
-        <div className="flex w-full max-w-[50%] flex-col gap-4">
+        <div className="flex w-full max-w-[50%] flex-col gap-4 max-md:max-w-full">
           <div>
             <YoutubeEmbed embedId={summaries[selected].videoId} />
           </div>

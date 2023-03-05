@@ -9,9 +9,10 @@
   "dependencies": {
     "@radix-ui/react-scroll-area": "^1.0.2",
     "@radix-ui/react-separator": "^1.0.1",
+    "@react-spring/parallax": "^9.7.1",
     "aws-sdk": "^2.1323.0",
-    "exponential-backoff": "^3.1.1",
     "clsx": "^1.2.1",
+    "exponential-backoff": "^3.1.1",
     "next": "latest",
     "openai": "^3.2.1",
     "react": "18.2.0",
