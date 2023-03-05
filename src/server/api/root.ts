@@ -38,7 +38,7 @@ export const appRouter = createTRPCRouter({
         searchTerm: z.string(),
       }),
     )
-    .query(async ({ input }) => {
+    .query(({ input }) => {
       try {
         return {
           summaries: summaries,

@@ -44,7 +44,7 @@ const summarizeBlock = async (
 
   const completion = await backOff(() => createCompletion(prompt));
 
-  if (completion.data.choices[0].message) {
+  if (completion?.data?.choices[0]?.message) {
     return completion.data.choices[0].message;
   }
 
