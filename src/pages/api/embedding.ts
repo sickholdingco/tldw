@@ -1,8 +1,8 @@
-import { embeddingQuestion } from "mock/embeddingResponses";
-import summaries from "mock/summaries";
+import EmbeddingService from "@/server/services/openai/embedding-service";
+// import { embeddingQuestion } from "mock/embeddingResponses";
+// import summaries from "mock/summaries";
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { type CreateEmbeddingResponse } from "openai";
-import EmbeddingService from "../../services/openai/embedding-service";
+// import { type CreateEmbeddingResponse } from "openai";
 
 interface Data {
   name: string;
