@@ -12,7 +12,7 @@ interface Request extends NextApiRequest {
 
 const embedding = async (req: Request, res: NextApiResponse<Data>) => {
   const embeddingResponse = await EmbeddingService.generateEmbedding(
-    "big poopie",
+    req.body.question,
   );
   res.status(200).json({ name: embeddingResponse });
 };
