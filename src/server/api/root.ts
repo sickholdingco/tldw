@@ -1,6 +1,8 @@
-import { createTRPCRouter } from "@/server/api/trpc";
-import { embeddingRouter } from "@/server/api/routers/embedding";
-import { summarizeRouter } from "@/server/api/routers/summarize";
+import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import EmbeddingService from "@/server/services/openai/embedding-service";
+import { z } from "zod";
+import summaries from "@/mock/summaries";
+import { TRPCError } from "@trpc/server";
 
 /**
  * This is the primary router for your server.
@@ -8,8 +10,46 @@ import { summarizeRouter } from "@/server/api/routers/summarize";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  embedding: embeddingRouter,
-  summarize: summarizeRouter,
+  embed: publicProcedure
+    .input(
+      z.object({
+        question: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
+      try {
+        const embeddingResponse = await EmbeddingService.generateEmbedding(
+          "big poopie",
+        );
+
+        return {
+          embedding: embeddingResponse,
+        };
+      } catch (err) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to generate embedding",
+        });
+      }
+    }),
+  summarize: publicProcedure
+    .input(
+      z.object({
+        searchTerm: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
+      try {
+        return {
+          summaries: summaries,
+        };
+      } catch (err) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to fetch summary",
+        });
+      }
+    }),
 });
 
 // export type definition of API
