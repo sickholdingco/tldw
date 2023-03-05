@@ -11,9 +11,9 @@ const videoDisplay = () => {
   return (
     <div>
       <div className="mb-3 flex justify-center gap-5">
-        {summaries.map((s, i) => (
+        {summaries.map((summary, i) => (
           <button
-            key={s.videoId}
+            key={summary.videoId}
             onClick={() => {
               if (selected === i) return;
               setSelected(i);
@@ -25,15 +25,20 @@ const videoDisplay = () => {
               "rounded-lg",
             )}
           >
-            <Image src={s.thumbnail} alt="thumbnail" width={100} height={100} />
+            <Image
+              src={summary.thumbnail}
+              alt="thumbnail"
+              width={100}
+              height={100}
+            />
           </button>
         ))}
       </div>
 
       <div className="flex w-full justify-center gap-3 max-md:flex-col-reverse max-md:items-center">
         <div className="flex w-full max-w-[50%] flex-col gap-10 text-left max-md:max-w-full">
-          {summaries[selected].summaries.map((s) => (
-            <p>{s.content}</p>
+          {summaries[selected].summaries.map((summary) => (
+            <p>{summary.summary.content}</p>
           ))}
         </div>
         <Separator.Root orientation="vertical" className="w-px bg-red-700" />
