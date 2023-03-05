@@ -9,17 +9,27 @@ export type UseGetSummaryResponseType = {
   status: "SUCCESS" | "FAILURE";
 };
 
+export interface Block {
+  blockId: string;
+  text: string;
+}
+
+export interface Summary {
+  blockId: string;
+  summary: ChatCompletionResponseMessage;
+}
+
 export interface VideoSummary {
   videoId: string;
   title: string;
   thumbnail: string;
-  blocks: string[];
-  summaries: ChatCompletionResponseMessage[];
+  blocks: Block[];
+  summaries: Summary[];
 }
 
 export type VideoType = {
   id: string;
   title: string;
   thumbnail: string;
-  blocks: string[];
+  blocks: Block[];
 };
