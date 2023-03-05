@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { clsx } from "clsx";
 
-const videoDisplay = () => {
+const VideoDisplay = () => {
   const [selected, setSelected] = useState(0);
 
   return (
@@ -37,14 +37,14 @@ const videoDisplay = () => {
 
       <div className="flex w-full justify-center gap-3 max-md:flex-col-reverse max-md:items-center">
         <div className="flex w-full max-w-[50%] flex-col gap-10 text-left max-md:max-w-full">
-          {summaries[selected].summaries.map((summary) => (
-            <p>{summary.summary.content}</p>
+          {summaries[selected]?.summaries.map((summary) => (
+            <p key={summary.blockId}>{summary.summary.content}</p>
           ))}
         </div>
         <Separator.Root orientation="vertical" className="w-px bg-red-700" />
         <div className="flex w-full max-w-[50%] flex-col gap-4 max-md:max-w-full">
           <div>
-            <YoutubeEmbed embedId={summaries[selected].videoId} />
+            <YoutubeEmbed embedId={summaries[selected]?.videoId} />
           </div>
         </div>
       </div>
@@ -52,4 +52,4 @@ const videoDisplay = () => {
   );
 };
 
-export default videoDisplay;
+export default VideoDisplay;

@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import AWS from "aws-sdk";
-import { VideoType } from "../../types/types";
+import { type VideoType } from "../../types/types";
 
 AWS.config.update({
   region: process.env.AWS_REGION,

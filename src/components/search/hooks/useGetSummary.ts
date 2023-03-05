@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/consistent-type-imports */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useQuery } from "react-query";
 import { UseGetSummaryResponseType } from "../../../types/types";
 
