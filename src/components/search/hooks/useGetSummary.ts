@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { UseGetSummaryResponseType } from "../../../types/types";
 
 export const useGetSummary = (searchTerm: string) => {
