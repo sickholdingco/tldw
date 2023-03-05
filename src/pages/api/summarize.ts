@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/require-await */
-import transcript from "mock/summaries";
+import summaries from "mock/summaries";
 import { type NextApiRequest, type NextApiResponse } from "next";
-import AwsService from "../../services/aws/aws-service";
-import OpenAIService from "../../services/openai/summarize-service";
+import AwsService from "../../server/services/aws/aws-service";
+import OpenAIService from "../../server/services/openai/summarize-service";
 import { type VideoSummary } from "../../types/types";
 
 interface Data {
@@ -23,7 +23,7 @@ const summarize = async (req: Request, res: NextApiResponse<Data>) => {
     awsTranscriptResponse,
   );
   */
-  res.status(200).json({ summaries: transcript });
+  res.status(200).json({ summaries: summaries });
 };
 
 export default summarize;

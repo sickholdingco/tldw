@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { CreateEmbeddingResponse } from "openai";
-import EmbeddingService from "../../services/openai/embedding-service";
+import EmbeddingService from "../../server/services/openai/embedding-service";
 
 interface Data {
   name: CreateEmbeddingResponse;
