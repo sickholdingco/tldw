@@ -1,5 +1,5 @@
 import { z } from "zod";
-import summaries from "mock/summaries";
+import summaries from "@/mock/summaries";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";

@@ -1,5 +1,5 @@
 import * as Separator from "@radix-ui/react-separator";
-import { summaries } from "../../../mock/summaries";
+import { summaries } from "@/mock/summaries";
 import YoutubeEmbed from "@/components/youtubeEmbed/youtubeEmbed";
 import Image from "next/image";
 import { useState } from "react";
