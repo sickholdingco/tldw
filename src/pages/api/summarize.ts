@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/require-await */
 import transcript from "mock/summaries";
-import { NextApiRequest, NextApiResponse } from "next";
+import { type NextApiRequest, type NextApiResponse } from "next";
 import AwsService from "../../services/aws/aws-service";
 import OpenAIService from "../../services/openai/summarize-service";
-import { VideoSummary } from "../../types/types";
+import { type VideoSummary } from "../../types/types";
 
 interface Data {
   summaries: VideoSummary[];

@@ -1,6 +1,6 @@
 import {
   backOff as exponentialBackOff,
-  IBackOffOptions,
+  type IBackOffOptions,
 } from "exponential-backoff";
 
 export const backOff = async <T>(
@@ -18,6 +18,7 @@ export const backOff = async <T>(
       },
     },
   ).catch((err) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     throw new Error(err);
   });
 };

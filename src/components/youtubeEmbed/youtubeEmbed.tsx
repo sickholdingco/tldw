@@ -1,11 +1,13 @@
 import { useState } from "react";
 
-const youtubeEmbed = ({ embedId }: { embedId: string }) => {
+const YoutubeEmbed = ({ embedId }: { embedId: string | undefined }) => {
   const [loaded, setLoaded] = useState(false);
 
   const handleLoad = () => {
     setLoaded(true);
   };
+
+  if (!embedId) return null;
 
   return (
     <div className="video-responsive">
@@ -22,4 +24,4 @@ const youtubeEmbed = ({ embedId }: { embedId: string }) => {
   );
 };
 
-export default youtubeEmbed;
+export default YoutubeEmbed;
