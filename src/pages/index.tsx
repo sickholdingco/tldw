@@ -5,7 +5,7 @@ import VideoDisplay from "@/components/videoDisplay/videoDisplay";
 
 const Home: NextPage = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className="flex h-full flex-col items-center justify-center py-2 ">
       <Head>
         <title>tl;dw</title>
         <link rel="icon" href="/favicon.ico" />
@@ -15,9 +15,9 @@ const Home: NextPage = () => {
         <VideoDisplay />
       </main>
 
-      <footer className="flex h-24 w-full items-center justify-center">
+      {/* <footer className="flex h-24 w-full items-center justify-center">
         <Footer />
-      </footer>
+      </footer> */}
     </div>
   );
 };
