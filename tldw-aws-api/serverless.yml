@@ -16,8 +16,11 @@ functions:
           path: /
           method: get
   youtube_transcript:
-    handler: functions.youtube_transcript.generateTranscript
+    handler: functions.youtube_transcript.index.generateTranscript
     events:
       - httpApi:
           path: /generateTranscript
           method: get
+    package:
+      include:
+        - ./functions/youtube_transcript/python/site-packages
