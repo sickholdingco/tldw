@@ -1,0 +1,23 @@
+org: jhamilton
+app: tldw-aws-api
+service: tldw-aws-api
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.9
+  deploymentMethod: direct
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+  youtube_transcript:
+    handler: functions.youtube_transcript.generateTranscript
+    events:
+      - httpApi:
+          path: /generateTranscript
+          method: get
