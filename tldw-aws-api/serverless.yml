@@ -3,6 +3,9 @@ app: tldw-aws-api
 service: tldw-aws-api
 frameworkVersion: "3"
 
+plugins:
+  - serverless-python-requirements
+
 provider:
   name: aws
   runtime: python3.9
@@ -16,11 +19,8 @@ functions:
           path: /
           method: get
   youtube_transcript:
-    handler: functions.youtube_transcript.index.generateTranscript
+    handler: functions.youtube_transcript.generateTranscript
     events:
       - httpApi:
           path: /generateTranscript
           method: get
-    package:
-      include:
-        - ./functions/youtube_transcript/python/site-packages
