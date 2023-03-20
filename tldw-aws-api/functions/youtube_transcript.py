@@ -59,6 +59,7 @@ def generateTranscript(event, context):
 	    FunctionName='embeddings',
 	    Payload=json.dumps(payload)
 	)
+  # unused, can we remove this @tyler?
 	response_payload = json.loads(response['Payload'].read().decode('utf-8'))
 
 	response = table.put_item(Item=vid_info)
