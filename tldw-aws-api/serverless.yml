@@ -24,3 +24,21 @@ functions:
       - httpApi:
           path: /generateTranscript
           method: get
+  generate_embeddings:
+    handler: functions.generate_embeddings.generateEmbeddings
+    events:
+      - httpApi:
+          path: /generateEmbeddings
+          method: get
+  pinecone_query:
+    handler: functions.pinecone_query.generatePinconeQuery
+    events:
+      - httpApi:
+          path: /generatePinconeQuery
+          method: get
+  answer_question:
+    handler: functions.answer_question.generateAnswer
+    events:
+      - httpApi:
+          path: /generateAnswer
+          method: get
