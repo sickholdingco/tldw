@@ -7,10 +7,15 @@ plugins:
   - serverless-python-requirements
 
 package:
+  individually: true
   patterns:
     - "!node_modules/**"
     - "!venv/**"
-  individually: true
+
+custom:
+  pythonRequirements:
+    slim: true
+    layer: true
 
 provider:
   name: aws
@@ -25,25 +30,37 @@ functions:
           path: /
           method: get
   youtube_transcript:
-    handler: functions.youtube_transcript.generateTranscript
+    handler: index.generateTranscript
+    module: functions.youtube_transcript
+    layers:
+      - Ref: PythonRequirementsLambdaLayer
     events:
       - httpApi:
           path: /generateTranscript
           method: get
   generate_embeddings:
-    handler: functions.generate_embeddings.generateEmbeddings
+    handler: index.generateEmbeddings
+    module: functions.generate_embeddings
+    layers:
+      - Ref: PythonRequirementsLambdaLayer
     events:
       - httpApi:
           path: /generateEmbeddings
           method: get
   pinecone_query:
-    handler: functions.pinecone_query.generatePinconeQuery
+    handler: index.generatePinconeQuery
+    module: functions.pinecone_query
+    layers:
+      - Ref: PythonRequirementsLambdaLayer
     events:
       - httpApi:
           path: /generatePinconeQuery
           method: get
   answer_question:
-    handler: functions.answer_question.generateAnswer
+    handler: index.generateAnswer
+    module: functions.answer_questions
+    layers:
+      - Ref: PythonRequirementsLambdaLayer
     events:
       - httpApi:
           path: /generateAnswer
