@@ -16,4 +16,4 @@ def generateAnswer(event, context):
       ]
   )
 
-  print(result)
+  return result
