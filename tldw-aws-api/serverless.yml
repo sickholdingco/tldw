@@ -6,6 +6,12 @@ frameworkVersion: "3"
 plugins:
   - serverless-python-requirements
 
+package:
+  patterns:
+    - "!node_modules/**"
+    - "!venv/**"
+  individually: true
+
 provider:
   name: aws
   runtime: python3.9
