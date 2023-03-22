@@ -13,13 +13,45 @@ package:
     - "!venv/**"
 
 custom:
+  tableName: "topic-info"
   pythonRequirements:
     slim: true
 
 provider:
   name: aws
   runtime: python3.9
+  region: us-east-2
   deploymentMethod: direct
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - { "Fn::GetAtt": ["TopicInfoDynamoDBTable", "Arn"] }
+  environment:
+    TOPIC_INFO_TABLE: ${self:custom.tableName}
+    YOUTUBE_API_KEY: poop
+
+resources:
+  Resources:
+    TopicInfoDynamoDBTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableName}
 
 functions:
   hello:
