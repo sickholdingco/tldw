@@ -40,18 +40,23 @@ const VideoDisplay = () => {
       </div>
 
       <div
-        className="flex w-full justify-center gap-3 max-md:flex-col-reverse max-md:items-center"
+        className="flex w-full justify-center max-md:flex-col-reverse max-md:items-center"
         style={{
           height: `calc(100vh - var(--top-section-height))`,
         }}
       >
-        <div className="flex h-full w-full max-w-[50%] flex-col gap-10 overflow-y-auto text-left max-md:max-w-full">
+        <div
+          className="flex h-full w-full max-w-[50%] flex-col gap-10 overflow-y-auto pr-4 text-left max-md:max-w-full"
+          style={{
+            scrollbarWidth: "thin",
+          }}
+        >
           {summaries[selected]?.summaries.map((summary) => (
             <p key={summary.blockId}>{summary.summary.content}</p>
           ))}
         </div>
         <Separator.Root orientation="vertical" className="w-px bg-red-700" />
-        <div className="flex w-full max-w-[50%] flex-col gap-4 max-md:max-w-full">
+        <div className="flex w-full max-w-[50%] flex-col gap-4 pl-4 max-md:max-w-full">
           <div>
             <YoutubeEmbed embedId={summaries[selected]?.videoId} />
           </div>
