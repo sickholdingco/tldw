@@ -2,14 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --top-section-height: calc(100px + 1.25rem);
+}
+
 @layer base {
   html {
     @apply text-white;
+    @apply h-full;
   }
 
   body {
     @apply bg-[#2d2d2d];
     @apply font-sans;
+    @apply h-full;
+    @apply overflow-hidden;
   }
 }
 
@@ -20,6 +27,6 @@
 } */
 
 .gradient-text {
-  @apply text-transparent bg-clip-text;
+  @apply bg-clip-text text-transparent;
   @apply bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-pink-500;
 }

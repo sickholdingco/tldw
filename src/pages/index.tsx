@@ -5,20 +5,16 @@ import VideoDisplay from "@/components/videoDisplay/videoDisplay";
 
 const Home: NextPage = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <>
       <Head>
         <title>tl;dw</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-full flex-1 flex-col px-20">
+      <main className="m-auto flex w-full max-w-7xl flex-1 flex-col px-16 py-2">
         <VideoDisplay />
       </main>
-
-      <footer className="flex h-24 w-full items-center justify-center">
-        <Footer />
-      </footer>
-    </div>
+    </>
   );
 };
 

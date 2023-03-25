@@ -17,7 +17,7 @@ export const Footer = () => {
   ];
 
   return (
-    <div className="relative mt-10 flex h-20 w-full items-center px-24 pb-6">
+    <div className="relative flex w-full items-center">
       <div className="flex w-full items-center justify-start">
         <Image
           src="/gradient.jpeg"
