@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { clsx } from "clsx";
 import { Footer } from "../footer/Footer";
+import { Chat } from "../chat/Chat";
 
 const VideoDisplay = () => {
   const [selected, setSelected] = useState(0);
@@ -25,7 +26,7 @@ const VideoDisplay = () => {
                 selected === i
                   ? "border-2 border-red-700 max-md:hidden"
                   : "border-2 border-transparent",
-                "rounded-lg",
+                "overflow-hidden rounded-lg",
               )}
             >
               <Image
@@ -55,11 +56,15 @@ const VideoDisplay = () => {
             <p key={summary.blockId}>{summary.summary.content}</p>
           ))}
         </div>
-        <Separator.Root orientation="vertical" className="w-px bg-red-700" />
-        <div className="flex w-full max-w-[50%] flex-col gap-4 pl-4 max-md:max-w-full">
+        <Separator.Root
+          orientation="vertical"
+          className="my-1 w-px bg-white opacity-10"
+        />
+        <div className="flex h-full w-full max-w-[50%] flex-col gap-4 pl-4 max-md:max-w-full">
           <div>
             <YoutubeEmbed embedId={summaries[selected]?.videoId} />
           </div>
+          <Chat />
         </div>
       </div>
     </div>

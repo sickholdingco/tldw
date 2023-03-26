@@ -12,6 +12,21 @@
     @apply h-full;
   }
 
+  ::-webkit-scrollbar {
+    @apply h-4;
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full;
+    background-color: rgba(86, 88, 105, 0.8);
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply rounded-full;
+    @apply bg-transparent;
+  }
+
   body {
     @apply bg-[#2d2d2d];
     @apply font-sans;
