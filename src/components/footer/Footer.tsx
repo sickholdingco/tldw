@@ -18,20 +18,23 @@ export const Footer = () => {
 
   return (
     <div className="relative flex w-full items-center">
-      <div className="flex w-full items-center justify-start">
-        <Image
-          src="/gradient.jpeg"
-          alt="gradient logo"
-          className="h-5 w-5 rounded-full"
-          width={20}
-          height={20}
-        />
-        <p className="hidden pl-2 text-xs md:flex ">an shco production</p>
-        <p className="smMax:flex hidden pl-2 text-xs">shco</p>
-      </div>
-
-      <div className="flex w-full justify-center">
-        <ul className="relative grid grid-cols-2 gap-4 sm:grid-cols-2">
+      <div className="flex w-full flex-col items-start justify-center">
+        <ul className="relative flex gap-4">
+          <li>
+            <a
+              target="_parent"
+              rel="noopener noreferrer"
+              href="https://shco.io"
+            >
+              <Image
+                src="/gradient.jpeg"
+                alt="gradient logo"
+                className="h-6 w-6 rounded-full"
+                width={20}
+                height={20}
+              />
+            </a>
+          </li>
           {links.map((link) => (
             <li key={link.url}>
               <a
@@ -46,9 +49,8 @@ export const Footer = () => {
             </li>
           ))}
         </ul>
+        <p className="pt-1 text-xs">an shco production</p>
       </div>
-
-      <div className="hidden w-full sm:flex" />
     </div>
   );
 };

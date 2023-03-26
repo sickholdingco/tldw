@@ -25,7 +25,7 @@ const ChatInput = (props: ChatInputProps) => {
 
   return (
     <div className="absolute bottom-0 flex w-full justify-center text-black">
-      <div className="relative mx-3 flex w-full flex-grow rounded-md border border-gray-600 bg-gray-700 py-2">
+      <div className="relative flex w-full flex-grow rounded-md border border-gray-600 bg-gray-700 py-2">
         <input
           className="h-6 max-h-52 w-full resize-none bg-gray-700 bg-transparent p-2 text-sm text-white  focus:outline-none focus:ring-0 focus-visible:ring-0"
           onKeyDown={(e) => enterPress(e, handleSubmit)}

@@ -26,6 +26,7 @@ export const Search = () => {
           onKeyDown={(e) => enterPress(e, handleSubmit)}
           value={searchInput}
           onChange={(event) => setSearchInput(event.target.value)}
+          placeholder="Search for a youtube video"
         />
         <button
           className="absolute bottom-1.5 right-1 rounded p-1"
