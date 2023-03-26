@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import ChatInput from "./ChatInput";
 import { useAnswerQuestion } from "./hooks/useAnswerQuestion";
@@ -25,8 +26,6 @@ const messageList: Message[] = [
 ];
 
 export const Chat = () => {
-  const [searchInput, setSearchInput] = useState<string>("");
-
   const [messages, setMessages] = useState<Message[]>(messageList);
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -41,17 +40,6 @@ export const Chat = () => {
 
   return (
     <div className="h-full overflow-y-auto">
-      {/* <button
-        className="bg-product-purple w-full rounded-lg py-5 text-[16px] font-medium leading-none"
-        type="button"
-        onClick={onSubmit}
-      >
-        {isLoading || isFetching ? (
-          <span>loading...</span>
-        ) : (
-          <span>embedding</span>
-        )}
-      </button> */}
       <div className="relative h-full overflow-auto">
         <MessageSection messages={messages} />
         <ChatInput setMessages={setMessages} />

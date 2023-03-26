@@ -6,6 +6,7 @@ import { useState } from "react";
 import { clsx } from "clsx";
 import { Footer } from "../footer/Footer";
 import { Chat } from "../chat/Chat";
+import { Search } from "../search/Search";
 
 const VideoDisplay = () => {
   const [selected, setSelected] = useState(0);
@@ -14,6 +15,7 @@ const VideoDisplay = () => {
     <div>
       <div className="mb-3 flex max-h-[100px] justify-between gap-5">
         <Footer />
+        <Search />
         <div className="flex w-full justify-end gap-1">
           {summaries.map((summary, i) => (
             <button

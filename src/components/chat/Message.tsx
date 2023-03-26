@@ -10,8 +10,6 @@ interface MessageProps {
 const Message = (props: MessageProps) => {
   const { children, isUser = false } = props;
 
-  console.log(children);
-
   return (
     <div
       className={clsx(
