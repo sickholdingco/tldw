@@ -1,7 +1,6 @@
 import os
 import concurrent.futures
 import openai
-import json
 import pinecone
 
 def embed(text):
@@ -12,11 +11,7 @@ def embed(text):
 
 def generateEmbeddings(event, context):
 
-	with open("transcripts.json", "r") as f:
-			json_string = f.read()
-
-	data = json.loads(json_string)
-
+	vid_data = event['search_videos']
 	openai.api_key = os.environ["OPENAI_API_KEY"]
 	pinecone.init(
 		api_key = os.environ["PINECONE_API_KEY"],
@@ -28,9 +23,9 @@ def generateEmbeddings(event, context):
 
 	index = pinecone.Index('block-embeddings')
 
-	executor = concurrent.futures.ThreadPoolExecutor(max_workers=data["num_blocks"])
+	executor = concurrent.futures.ThreadPoolExecutor(max_workers=vid_data["num_blocks"])
 	futures = []
-	for vid in data["vid_info"]:
+	for vid in vid_data:
 		for block in vid["blocks"]:
 			futures.append(executor.submit(embed, block["text"]))
 
@@ -45,9 +40,4 @@ def generateEmbeddings(event, context):
 		embeddings.append(data)
 		id += 1
 
-	index.upsert(vectors=embeddings, namespace='svb-embeddings-namespace')
-
-	# json_string = json.dumps(results)
-
-	# with open("embeddings.json", "w") as f:
-	# 	f.write(json_string)
+	index.upsert(vectors=embeddings, namespace=vid_data["db_id"])

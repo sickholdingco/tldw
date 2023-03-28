@@ -58,11 +58,12 @@ def generateTranscript(event, context):
 				vid['blocks'] = []
 				print('this video does not have transcription!')
 
+	db_id = str(uuid4())
 	dbClient.put_item(
 		TableName=TOPIC_INFO_TABLE,
 		Item={
 				'id': {
-					'S': str(uuid4())
+					'S': db_id
 				},
 				'search_videos': {
 					'S': json.dumps(search_videos)
@@ -72,11 +73,13 @@ def generateTranscript(event, context):
 
 	payload = {
 		"search_videos": search_videos,
-		"num_blocks": num_blocks
+		"num_blocks": num_blocks,
+		"db_id": db_id
 	}
-	# response = client.invoke(
-	# 		FunctionName='embeddings',
-	# 		Payload=json.dumps(payload)
-	# )
+	response = client.invoke(
+			FunctionName='tldw-aws-api-dev-generate_embeddings',
+			InvocationType='Event',
+			Payload=json.dumps(payload)
+	)
 
 	return search_videos
