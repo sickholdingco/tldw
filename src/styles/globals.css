@@ -2,14 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --top-section-height: calc(100px + 1.25rem);
+}
+
 @layer base {
   html {
     @apply text-white;
+    @apply h-full;
+  }
+
+  ::-webkit-scrollbar {
+    @apply h-4;
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full;
+    background-color: rgba(86, 88, 105, 0.8);
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply rounded-full;
+    @apply bg-transparent;
   }
 
   body {
     @apply bg-[#2d2d2d];
     @apply font-sans;
+    @apply h-full;
+    @apply overflow-hidden;
   }
 }
 
@@ -20,6 +42,6 @@
 } */
 
 .gradient-text {
-  @apply text-transparent bg-clip-text;
+  @apply bg-clip-text text-transparent;
   @apply bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-pink-500;
 }

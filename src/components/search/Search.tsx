@@ -1,62 +1,40 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { useGetSummary } from "./hooks/useGetSummary";
+import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
+import { enterPress } from "../../utils/helperFunctions/enterPress";
 
 export const Search = () => {
   const [searchInput, setSearchInput] = useState("");
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, isLoading, isError, isFetching, refetch } =
     useGetSummary(searchInput);
 
-  const onSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    refetch();
+  const handleSubmit = () => {
+    if (searchInput !== "") {
+      console.log("searchInput: ", searchInput);
+    }
+
+    setSearchInput("");
   };
 
   return (
     <div className="flex w-full items-center justify-start">
-      <form
-        className="flex flex-col gap-4"
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <div className="flex flex-col gap-[5px]">
-          <input
-            className="form-control
-          border-product-purple
-          m-0
-          block
-          w-full
-          rounded-lg
-          border
-          border-solid
-          bg-[#2d2d2d] px-4 py-2
-          text-[16px]
-          font-normal
-          transition
-          ease-in-out
-          focus:outline-none
-          "
-            placeholder="search me as if it were youtube"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            id="url-input"
-          />
-        </div>
+      <div className="relative flex w-full flex-grow rounded-md border border-gray-600 bg-gray-700 py-2">
+        <input
+          className="h-6 max-h-52 w-full resize-none bg-gray-700 bg-transparent p-2 text-sm text-white  focus:outline-none focus:ring-0 focus-visible:ring-0"
+          onKeyDown={(e) => enterPress(e, handleSubmit)}
+          value={searchInput}
+          onChange={(event) => setSearchInput(event.target.value)}
+          placeholder="Search for a youtube video"
+        />
         <button
-          className="bg-product-purple w-full rounded-lg py-5 text-[16px] font-medium leading-none"
-          type="button"
-          onClick={onSubmit}
+          className="absolute bottom-1.5 right-1 rounded p-1"
+          onClick={handleSubmit}
         >
-          {isLoading || isFetching ? (
-            <span>loading...</span>
-          ) : (
-            <span>search</span>
-          )}
+          <ArrowUpCircleIcon className="h-5 w-5 text-white" />
         </button>
-      </form>
+      </div>
     </div>
   );
 };
