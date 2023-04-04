@@ -26,7 +26,7 @@ const VideoDisplay = () => {
               }}
               className={clsx(
                 selected === i
-                  ? "border-2 border-red-700 max-md:hidden"
+                  ? "border-2 border-blueHighlight max-md:hidden"
                   : "border-2 border-transparent",
                 "overflow-hidden rounded-lg",
               )}
@@ -60,7 +60,7 @@ const VideoDisplay = () => {
         </div>
         <Separator.Root
           orientation="vertical"
-          className="my-1 w-px bg-white opacity-10"
+          className="my-1 w-px bg-dimmed-600 opacity-10"
         />
         <div className="flex h-full w-full max-w-[50%] flex-col gap-4 pl-4 max-md:max-w-full">
           <div>

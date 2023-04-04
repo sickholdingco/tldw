@@ -19,8 +19,10 @@ const Message = (props: MessageProps) => {
     >
       <p
         className={clsx(
-          "max-w-xs break-words   rounded-t-lg py-2 px-4 text-sm text-white",
-          isUser ? "rounded-bl-lg bg-blue-500" : "rounded-br-lg bg-gray-500",
+          "max-w-xs break-words rounded-t-lg py-2 px-4 text-sm",
+          isUser
+            ? "rounded-bl-lg bg-blueAccent"
+            : "rounded-br-lg bg-dimmed-800",
         )}
       >
         {children}

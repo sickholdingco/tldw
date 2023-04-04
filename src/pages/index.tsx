@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Footer } from "@/components/footer/Footer";
 import VideoDisplay from "@/components/videoDisplay/videoDisplay";
 
 const Home: NextPage = () => {
@@ -11,7 +10,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="m-auto flex w-full max-w-7xl flex-1 flex-col px-16 py-2">
+      <main className="m-auto flex w-full max-w-[90rem] flex-1 flex-col px-4 py-2">
         <VideoDisplay />
       </main>
     </>
