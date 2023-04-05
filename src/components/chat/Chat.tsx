@@ -3,6 +3,7 @@ import { useState } from "react";
 import ChatInput from "./ChatInput";
 import { useAnswerQuestion } from "./hooks/useAnswerQuestion";
 import MessageSection from "./MessageSection";
+import clsx from "clsx";
 
 export interface Message {
   content: string;
@@ -25,7 +26,7 @@ const messageList: Message[] = [
   },
 ];
 
-export const Chat = () => {
+export const Chat = ({ className }: { className?: string }) => {
   const [messages, setMessages] = useState<Message[]>(messageList);
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -39,7 +40,7 @@ export const Chat = () => {
   // };
 
   return (
-    <div className="h-full overflow-y-auto">
+    <div className={clsx("h-full overflow-y-auto", className)}>
       <div className="relative h-full overflow-auto">
         <MessageSection messages={messages} />
         <ChatInput setMessages={setMessages} />
