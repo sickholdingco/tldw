@@ -1,0 +1,19 @@
+service: tldw-node-api
+
+frameworkVersion: "3"
+
+custom:
+  tableName: "topic-info"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-2
+
+functions:
+  generate_embeddings:
+    handler: functions/generateEmbeddings.handler
+    events:
+      - http:
+          path: functions
+          method: post

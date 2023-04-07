@@ -1,16 +1,12 @@
 import os
 import math
 import json
-from uuid import uuid4
 import boto3
 from youtube_transcript_api import YouTubeTranscriptApi
 from googleapiclient.discovery import build
 
 def generateTranscript(event, context):
 	client = boto3.client('lambda')
-
-	TOPIC_INFO_TABLE = os.environ['TOPIC_INFO_TABLE']
-	dbClient = boto3.client('dynamodb')
 
 	api_key = os.environ["YOUTUBE_API_KEY"]
 	youtube = build('youtube','v3',developerKey = api_key)
@@ -28,7 +24,7 @@ def generateTranscript(event, context):
 	search_videos = []
 	for item in items:
 		search_videos.append({ 
-			'id':  item['id']['videoId'],
+			'videoId':  item['id']['videoId'],
 			'title': item['snippet']['title'], 
 			'thumbnail': item['snippet']['thumbnails']['high']['url']
 		})
@@ -37,7 +33,7 @@ def generateTranscript(event, context):
 		block_id = 0
 		for vid in search_videos:
 			try:
-				dict_list = YouTubeTranscriptApi.get_transcript(vid['id'])
+				dict_list = YouTubeTranscriptApi.get_transcript(vid['videoId'])
 				result = ""
 				for d in dict_list:
 					result += " " + d['text']
@@ -58,28 +54,29 @@ def generateTranscript(event, context):
 				vid['blocks'] = []
 				print('this video does not have transcription!')
 
-	db_id = str(uuid4())
-	dbClient.put_item(
-		TableName=TOPIC_INFO_TABLE,
-		Item={
-				'id': {
-					'S': db_id
-				},
-				'search_videos': {
-					'S': json.dumps(search_videos)
-				}
-		}
+	db_payload = {
+		'search_videos': search_videos
+	}
+
+	# calling our db api to create an item
+	db_response = client.invoke(
+			FunctionName='tldw-db-api-dev-createTopicInfo',
+			InvocationType='RequestResponse',
+			Payload=json.dumps(db_payload)
 	)
 
-	payload = {
+	response_payload = json.loads(db_response['Payload'].read())
+
+	embeddings_payload = {
 		"search_videos": search_videos,
 		"num_blocks": num_blocks,
-		"db_id": db_id
+		"db_id": json.loads(response_payload["body"])["id"]
 	}
+
 	response = client.invoke(
 			FunctionName='tldw-aws-api-dev-generate_embeddings',
 			InvocationType='Event',
-			Payload=json.dumps(payload)
+			Payload=json.dumps(embeddings_payload)
 	)
 
 	return search_videos
