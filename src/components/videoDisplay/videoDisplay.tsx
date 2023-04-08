@@ -15,7 +15,7 @@ const VideoDisplay = () => {
   return (
     <div>
       <div className="mb-3 flex max-h-[100px] justify-between gap-5">
-        {/* <Footer /> */}
+        <Footer />
         <Search />
         <div className="flex w-full justify-end gap-1 max-md:w-auto">
           {summaries.map((summary, i) => (
@@ -50,7 +50,7 @@ const VideoDisplay = () => {
         }}
       >
         <div
-          className="flex h-full w-full max-w-[50%] flex-col gap-10 overflow-y-auto pr-4 text-left max-md:max-w-full"
+          className="flex h-full w-full max-w-[50%] flex-col gap-10 overflow-y-auto pr-4 text-left max-md:max-w-full max-md:pr-0"
           style={{
             scrollbarWidth: "thin",
           }}
@@ -63,7 +63,7 @@ const VideoDisplay = () => {
           orientation="vertical"
           className="my-1 w-px bg-dimmed-600 opacity-10"
         />
-        <div className="flex h-full w-full max-w-[50%] flex-col gap-4 pl-4 max-md:h-auto max-md:max-w-full">
+        <div className="flex h-full w-full max-w-[50%] flex-col gap-4 pl-4 max-md:h-auto max-md:max-w-full max-md:pl-0">
           <div>
             <YoutubeEmbed embedId={summaries[selected]?.videoId} />
           </div>

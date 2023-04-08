@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGetSummary } from "./hooks/useGetSummary";
-import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { enterPress } from "../../utils/helperFunctions/enterPress";
 
 export const Search = () => {
@@ -32,7 +32,7 @@ export const Search = () => {
           className="absolute bottom-1.5 right-1 rounded p-1"
           onClick={handleSubmit}
         >
-          <ArrowUpCircleIcon className="h-5 w-5 text-dimmed-100 max-md:hidden" />
+          <MagnifyingGlassIcon className="h-5 w-5 text-dimmed-100 max-md:hidden" />
         </button>
       </div>
     </div>
