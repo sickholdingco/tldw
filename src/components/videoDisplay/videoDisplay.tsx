@@ -15,7 +15,7 @@ const VideoDisplay = () => {
   return (
     <div>
       <div className="mb-3 flex max-h-[100px] justify-between gap-5">
-        <Footer />
+        {/* <Footer /> */}
         <Search />
         <div className="flex w-full justify-end gap-1 max-md:w-auto">
           {summaries.map((summary, i) => (

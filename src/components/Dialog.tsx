@@ -44,8 +44,8 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={clsx(
-        "animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0 fixed z-50 grid w-full gap-4 rounded-b-lg bg-white p-6 sm:max-w-lg sm:rounded-lg",
-        "dark:bg-slate-900",
+        "animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0 fixed z-50 grid w-full gap-4 rounded-b-lg p-6 sm:max-w-lg sm:rounded-lg",
+        "top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-dimmed-900",
         className,
       )}
       {...props}
@@ -65,10 +65,7 @@ const DialogHeader = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={clsx(
-      "flex flex-col space-y-2 text-center sm:text-left",
-      className,
-    )}
+    className={clsx("flex flex-col text-center sm:text-left", className)}
     {...props}
   />
 );
