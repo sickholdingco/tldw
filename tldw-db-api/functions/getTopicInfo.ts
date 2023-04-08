@@ -1,5 +1,3 @@
-"use strict";
-
 import { type Handler } from "aws-lambda";
 import { DynamoDB } from "aws-sdk";
 import { type GetItemInput } from "aws-sdk/clients/dynamodb";
