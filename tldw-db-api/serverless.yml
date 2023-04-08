@@ -7,6 +7,12 @@ frameworkVersion: "3"
 custom:
   tableName: "video-topic-info"
 
+package:
+  individually: true
+  patterns:
+    - "!node_modules/**"
+    - "!venv/**"
+
 plugins:
   - serverless-plugin-typescript
 
