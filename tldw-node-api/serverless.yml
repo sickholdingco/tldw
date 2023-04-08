@@ -1,19 +1,32 @@
+org: sickholdingdev
+app: tldw-aws-api
 service: tldw-node-api
 
 frameworkVersion: "3"
 
 custom:
-  tableName: "topic-info"
+  tableName: "video-topic-info"
+
+package:
+  individually: true
+  patterns:
+    - "!node_modules/**"
+    - "!venv/**"
+
+plugins:
+  - serverless-plugin-typescript
 
 provider:
   name: aws
   runtime: nodejs18.x
   region: us-east-2
+  deploymentMethod: direct
 
 functions:
-  generate_embeddings:
-    handler: functions/generateEmbeddings.handler
+  createTopicInfo:
+    handler: functions/generateEmbeddings.generate
     events:
       - http:
           path: functions
           method: post
+          cors: true

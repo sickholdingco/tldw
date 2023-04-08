@@ -1,92 +1,90 @@
-export {};
-// import { PineconeClient } from "@pinecone-database/pinecone";
-// // import { Configuration, OpenAIApi } from "openai";
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import { spawn, Worker } from "threads";
+import { PineconeClient } from "@pinecone-database/pinecone";
+import { embed } from "./worker";
 
-// // const configuration = new Configuration({
-// //   apiKey: process.env.OPENAI_API_KEY,
-// // });
-// // const openai = new OpenAIApi(configuration);
+interface Block {
+  text: string;
+}
 
-// interface Block {
-//   text: string;
-// }
+interface Video {
+  blocks: Block[];
+}
 
-// interface Video {
-//   blocks: Block[];
-// }
+interface Event {
+  search_videos: {
+    num_blocks: number;
+    db_id: string;
+    videos: Video[];
+  };
+}
 
-// interface Event {
-//   search_videos: {
-//     num_blocks: number;
-//     db_id: string;
-//     videos: Video[];
-//   };
-// }
+export const generate = async (event: Event) => {
+  const { num_blocks, db_id, videos } = event.search_videos;
 
-// // const embed = async (text: string) => {
-// //   const response = await openai.createEmbedding({
-// //     model: "text-embedding-ada-002",
-// //     input: text,
-// //   });
+  const pinecone = new PineconeClient();
 
-// //   return response.data;
-// // };
+  await pinecone.init({
+    environment: process.env.PINECONE_ENVIRONMENT,
+    apiKey: process.env.PINECONE_API_KEY,
+  });
 
-// export const handler = async (event: Event) => {
-//   // const { num_blocks, db_id, videos } = event.search_videos;
-//   const { num_blocks, videos } = event.search_videos;
+  if (!(await pinecone.listIndexes()).includes("block-embeddings")) {
+    await pinecone.createIndex({
+      createRequest: {
+        name: "block-embeddings",
+        dimension: 1536,
+      },
+    });
+  }
 
-//   const pinecone = new PineconeClient();
+  const workers = new Array(num_blocks);
 
-//   await pinecone.init({
-//     environment: process.env.PINECONE_ENVIRONMENT,
-//     apiKey: process.env.PINECONE_API_KEY,
-//   });
+  // type this better
+  const results = { embeddings: [] as number[] };
 
-//   if (!(await pinecone.listIndexes()).includes("block-embeddings")) {
-//     await pinecone.createIndex({
-//       createRequest: {
-//         name: "block-embeddings",
-//         dimension: 1536,
-//       },
-//     });
-//   }
+  for (const vid of videos) {
+    for (const block of vid["blocks"]) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+      const worker = await spawn(new Worker("./worker.ts"));
+      workers.push(worker);
 
-//   // const index = pinecone.Index("block-embeddings");
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      worker
+        .run(embed, block["text"])
+        .then((result) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          results.embeddings.push(result);
 
-//   const numThreads = num_blocks;
-//   const blocks = videos.flatMap((video) => video.blocks);
-//   const chunks = chunkArray(blocks, Math.ceil(blocks.length / numThreads));
-//   const futures = [];
+          if (results.embeddings.length === num_blocks) {
+            // All workers have completed
+            return {
+              statusCode: 200,
+              body: JSON.stringify(results),
+            };
+          }
+        })
+        .catch((err) => {
+          console.error(`Worker error: ${err}`);
+          return {
+            statusCode: 500,
+            body: JSON.stringify({ error: err.message }),
+          };
+        });
+    }
+  }
 
-//   // for (const chunk of chunks) {
-//   //   const worker = new Worker(__filename, {
-//   //     workerData: { blocks: chunk },
-//   //   });
-//   //   futures.push(worker);
-//   // }
+  // const embeddings = results.embeddings.map((embedding, id) => ({
+  //   id: `test-${id}`,
+  //   vector: embedding.data[0].embedding,
+  // }));
 
-//   // const results = { embeddings: [] };
-//   // const embeddings = [];
-//   // for (const future of futures) {
-//   //   const result = await new Promise((resolve) => {
-//   //     future.on("message", resolve);
-//   //   });
+  // figure out how to format this better
+  const embeddings: [string, number[]][] = results.embeddings.map(
+    (result, id) => [`test-${id}`, result.data[0].embedding],
+  );
 
-//   // embeddings.push(...result);
-//   // }
-
-//   // const embeddings = results.map((embedding, id) => ({
-//   //   id: `test-${id}`,
-//   //   vector: embedding.data[0].embedding,
-//   // }));
-//   // await index.upsert({ vectors: embeddings, namespace: db_id });
-// };
-
-// function chunkArray<T>(arr: T[], chunkSize: number): T[][] {
-//   const chunks = [];
-//   for (let i = 0; i < arr.length; i += chunkSize) {
-//     chunks.push(arr.slice(i, i + chunkSize));
-//   }
-//   return chunks;
-// }
+  const index = pinecone.Index("block-embeddings");
+  // find out what upsert takes as params
+  await index.upsert({ vectors: embeddings, namespace: db_id });
+};
