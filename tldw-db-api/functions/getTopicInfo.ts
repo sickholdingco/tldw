@@ -2,6 +2,7 @@
 
 import { type Handler } from "aws-lambda";
 import { DynamoDB } from "aws-sdk";
+import { type GetItemInput } from "aws-sdk/clients/dynamodb";
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
@@ -17,7 +18,7 @@ export const get: Handler = (event: GetTopicInfoEvent, context, callback) => {
     Key: {
       id: event.pathParameters.id,
     },
-  };
+  } as GetItemInput;
 
   // fetch item from the database
   dynamoDb.get(params, (error, result) => {

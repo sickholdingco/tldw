@@ -46,7 +46,7 @@ export const create: Handler = (event: TopicEvent, context, callback) => {
   } as PutItemInput;
 
   try {
-    dynamoDb.put(params, (error, result) => {
+    dynamoDb.put(params, (error) => {
       // handle potential errors
       if (error) {
         console.error(error);
