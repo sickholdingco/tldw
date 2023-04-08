@@ -1,0 +1,72 @@
+org: sickholdingdev
+app: tldw-aws-api
+service: tldw-db-api
+
+frameworkVersion: "3"
+
+custom:
+  tableName: "video-topic-info"
+
+package:
+  individually: true
+  patterns:
+    - "!node_modules/**"
+    - "!venv/**"
+
+plugins:
+  - serverless-plugin-typescript
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-2
+  deploymentMethod: direct
+  environment:
+    TOPIC_INFO_TABLE: ${self:custom.tableName}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - { "Fn::GetAtt": ["TopicInfoDynamoDBTable", "Arn"] }
+
+functions:
+  createTopicInfo:
+    handler: functions/createTopicInfo.create
+    events:
+      - http:
+          path: functions
+          method: post
+          cors: true
+
+  getTopicInfo:
+    handler: functions/getTopicInfo.get
+    events:
+      - http:
+          path: functions/{id}
+          method: get
+          cors: true
+
+resources:
+  Resources:
+    TopicInfoDynamoDBTable:
+      Type: "AWS::DynamoDB::Table"
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableName}

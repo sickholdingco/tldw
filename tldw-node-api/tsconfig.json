@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "commonjs"
+  },
+  "exclude": ["node_modules"],
+  "types": ["node", "aws-sdk"]
+}

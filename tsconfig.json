@@ -20,14 +20,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "tailwind.config.js",
-    ".eslintrc.cjs",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.mjs"
-  ],
+  "include": ["tailwind.config.js", ".eslintrc.cjs", "next-env.d.ts", "src"],
   "exclude": ["node_modules"]
 }
