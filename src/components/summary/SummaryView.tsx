@@ -19,7 +19,7 @@ const SummaryView = () => {
 
   return (
     <div>
-      <div className="flex max-h-[100px] justify-between gap-5 pb-8">
+      <div className="flex max-h-[100px] justify-between gap-5 mb-8 pb-6 border-b border-dimmed-600">
         <Footer />
 
         <Search searchInput={searchInput} setSearchInput={setSearchInput} onSubmit={refetch} />
