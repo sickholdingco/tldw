@@ -61,7 +61,6 @@ export const generate = async (event: Event) => {
   for (const vid of parsedSearch) {
     for (const block of vid.blocks) {
       if (block.blockId.toString() === matchingBlockId) {
-        console.log(matchingBlockId);
         const answer = await chat(event.question, block.text);
         return {
           statusCode: 200,
