@@ -1,19 +1,36 @@
+org: sickholdingdev
+app: tldw-aws-api
 service: tldw-node-api
 
 frameworkVersion: "3"
 
 custom:
   tableName: "topic-info"
+plugins:
+  - serverless-plugin-typescript
 
 provider:
   name: aws
   runtime: nodejs18.x
   region: us-east-2
+  deploymentMethod: direct
+  environment:
+    OPENAI_API_KEY: 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
+    PINECONE_API_KEY: 8a2f7a4f-c629-4339-8d65-c6d93183e23c
+    PINECONE_ENVIRONMENT: us-east-1-aws
 
 functions:
-  generate_embeddings:
-    handler: functions/generateEmbeddings.handler
+  generateEmbeddings:
+    handler: functions/generateEmbeddings.generate
     events:
       - http:
           path: functions
           method: post
+          cors: true
+  pineconeQuery:
+    handler: functions/pineconeQuery.generate
+    events:
+      - http:
+          path: functions
+          method: post
+          cors: true
