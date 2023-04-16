@@ -1,21 +1,15 @@
-import { useState } from "react";
-import { useGetSummary } from "./hooks/useGetSummary";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { enterPress } from "../../utils/helperFunctions/enterPress";
 
-export const Search = () => {
-  const [searchInput, setSearchInput] = useState("");
+interface SearchProps {
+  searchInput: string
+  setSearchInput: (value: string) => void
+  onSubmit: () => void
+}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data, isLoading, isError, isFetching, refetch } =
-    useGetSummary(searchInput);
-
+export const Search = ({ searchInput, setSearchInput, onSubmit }: SearchProps) => {
   const handleSubmit = () => {
-    if (searchInput !== "") {
-      console.log("searchInput: ", searchInput);
-    }
-
-    setSearchInput("");
+    onSubmit();
   };
 
   return (
@@ -26,7 +20,7 @@ export const Search = () => {
           onKeyDown={(e) => enterPress(e, handleSubmit)}
           value={searchInput}
           onChange={(event) => setSearchInput(event.target.value)}
-          placeholder="Search ..."
+          placeholder="Search..."
         />
         <button
           className="absolute bottom-1.5 right-1 rounded p-1"

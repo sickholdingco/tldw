@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import AWS from "aws-sdk";
-import type { VideoType } from "@/types";
+
+import type { VideoSummary } from "@/types";
 
 AWS.config.update({
   region: process.env.AWS_REGION,
@@ -11,9 +12,9 @@ AWS.config.update({
 
 const lambda = new AWS.Lambda();
 
-const generateTranscript = async (searchTerm: string): Promise<VideoType[]> => {
+const generateTranscript = async (searchTerm: string): Promise<VideoSummary[]> => {
   const params = {
-    FunctionName: "tldw-aws-api-dev-youtube-transcript",
+    FunctionName: "tldw-aws-api-dev-youtube_transcript",
     Payload: JSON.stringify({ searchTerm }),
   };
 
