@@ -7,6 +7,7 @@ import { clsx } from "clsx";
 import { Footer } from "../footer/Footer";
 import { Chat } from "../chat/Chat";
 import { Search } from "../search/Search";
+import MobileChat from "../MobileChat";
 
 const VideoDisplay = () => {
   const [selected, setSelected] = useState(0);
@@ -16,7 +17,7 @@ const VideoDisplay = () => {
       <div className="mb-3 flex max-h-[100px] justify-between gap-5">
         <Footer />
         <Search />
-        <div className="flex w-full justify-end gap-1">
+        <div className="flex w-full justify-end gap-1 max-md:w-auto">
           {summaries.map((summary, i) => (
             <button
               key={summary.videoId}
@@ -26,7 +27,7 @@ const VideoDisplay = () => {
               }}
               className={clsx(
                 selected === i
-                  ? "border-2 border-blueHighlight max-md:hidden"
+                  ? "border-2 border-blueHighlight max-md:hidden max-md:flex-none"
                   : "border-2 border-transparent",
                 "overflow-hidden rounded-lg",
               )}
@@ -49,7 +50,7 @@ const VideoDisplay = () => {
         }}
       >
         <div
-          className="flex h-full w-full max-w-[50%] flex-col gap-10 overflow-y-auto pr-4 text-left max-md:max-w-full"
+          className="flex h-full w-full max-w-[50%] flex-col gap-10 overflow-y-auto pr-4 text-left max-md:max-w-full max-md:pr-0"
           style={{
             scrollbarWidth: "thin",
           }}
@@ -62,11 +63,14 @@ const VideoDisplay = () => {
           orientation="vertical"
           className="my-1 w-px bg-dimmed-600 opacity-10"
         />
-        <div className="flex h-full w-full max-w-[50%] flex-col gap-4 pl-4 max-md:max-w-full">
+        <div className="flex h-full w-full max-w-[50%] flex-col gap-4 pl-4 max-md:h-auto max-md:max-w-full max-md:pl-0">
           <div>
             <YoutubeEmbed embedId={summaries[selected]?.videoId} />
           </div>
-          <Chat />
+          <div className="max-md:hidden max-md:flex-none">
+            <Chat />
+          </div>
+          <MobileChat />
         </div>
       </div>
     </div>

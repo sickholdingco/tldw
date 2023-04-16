@@ -1,5 +1,5 @@
 import Message from "./Message";
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import type { Message as MessageType } from "./Chat";
 
 const AlwaysScrollToBottom = () => {
@@ -20,12 +20,10 @@ const MessageSection = (props: ChatLayoutProps) => {
       <div className="flex-1 space-y-4 overflow-y-auto px-2">
         {messages?.map((message) => {
           return (
-            <>
-              <Message isUser={message.isUser} key={message.id}>
-                {message.content}
-              </Message>
+            <Fragment key={message.id}>
+              <Message isUser={message.isUser}>{message.content}</Message>
               <AlwaysScrollToBottom />
-            </>
+            </Fragment>
           );
         })}
         <div className="h-10 w-full flex-shrink-0 md:h-20"></div>

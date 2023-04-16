@@ -17,7 +17,7 @@ export const Footer = () => {
   ];
 
   return (
-    <div className="relative flex w-full items-center">
+    <div className="relative flex w-full items-center max-md:w-auto max-md:flex-none">
       <div className="flex w-full flex-col items-start justify-center">
         <ul className="relative flex gap-4">
           <li>
@@ -36,9 +36,9 @@ export const Footer = () => {
             </a>
           </li>
           {links.map((link) => (
-            <li key={link.url}>
+            <li key={link.url} className="max-md:hidden max-md:flex-none">
               <a
-                className="flex h-6 w-6 items-center justify-center"
+                className="flex h-6 w-6 items-center justify-center "
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -49,7 +49,7 @@ export const Footer = () => {
             </li>
           ))}
         </ul>
-        <p className="pt-1 text-xs">an shco production</p>
+        <p className="block pt-1 text-xs max-md:hidden">an shco production</p>
       </div>
     </div>
   );
