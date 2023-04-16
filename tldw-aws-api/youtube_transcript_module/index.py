@@ -74,7 +74,7 @@ def generateTranscript(event, context):
 	}
 
 	response = client.invoke(
-			FunctionName='tldw-aws-api-dev-generate_embeddings',
+			FunctionName='tldw-node-api-dev-generateEmbeddings',
 			InvocationType='Event',
 			Payload=json.dumps(embeddings_payload)
 	)

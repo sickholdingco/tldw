@@ -21,39 +21,15 @@ provider:
   runtime: python3.9
   region: us-east-2
   deploymentMethod: direct
+  timeout: 900
+  environment:
+    YOUTUBE_API_KEY: AIzaSyD1f0WU3DFhib7rG4dcM44lHW_gGz7CQWg
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-      - httpApi:
-          path: /
-          method: get
   youtube_transcript:
     handler: index.generateTranscript
     module: youtube_transcript_module
     events:
       - httpApi:
           path: /generateTranscript
-          method: get
-  generate_embeddings:
-    handler: index.generateEmbeddings
-    module: generate_embeddings_module
-    events:
-      - httpApi:
-          path: /generateEmbeddings
-          method: get
-  pinecone_query:
-    handler: index.generatePinconeQuery
-    module: pinecone_query_module
-    events:
-      - httpApi:
-          path: /generatePinconeQuery
-          method: get
-  answer_question:
-    handler: index.generateAnswer
-    module: answer_question_module
-    events:
-      - httpApi:
-          path: /generateAnswer
           method: get
