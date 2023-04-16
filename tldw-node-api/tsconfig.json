@@ -3,6 +3,6 @@
     "target": "es6",
     "module": "commonjs"
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", ".serverless/**/*"],
   "types": ["node", "aws-sdk"]
 }

@@ -1,26 +1,37 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import { spawn, Worker } from "threads";
-import { PineconeClient } from "@pinecone-database/pinecone";
-import { embed } from "./worker";
+import { PineconeClient, UpsertRequest } from "@pinecone-database/pinecone";
+import { UpsertOperationRequest } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch/apis";
+import { embed } from "./embed";
 
 interface Block {
+  blockId: number;
   text: string;
 }
 
 interface Video {
+  id: string;
+  title: string;
+  thumbnail: string;
   blocks: Block[];
 }
 
 interface Event {
-  search_videos: {
-    num_blocks: number;
-    db_id: string;
-    videos: Video[];
-  };
+  db_id: string;
+  num_blocks: number;
+  search_videos: Video[];
+}
+
+interface Embedding {
+  embedding: number[];
+  blockId: number;
+}
+
+interface Vector {
+  id: string;
+  values: number[];
 }
 
 export const generate = async (event: Event) => {
-  const { num_blocks, db_id, videos } = event.search_videos;
+  const db_id = event.db_id;
 
   const pinecone = new PineconeClient();
 
@@ -38,53 +49,33 @@ export const generate = async (event: Event) => {
     });
   }
 
-  const workers = new Array(num_blocks);
+  const results = { embeddings: [] as Embedding[] };
 
-  // type this better
-  const results = { embeddings: [] as number[] };
-
-  for (const vid of videos) {
-    for (const block of vid["blocks"]) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-      const worker = await spawn(new Worker("./worker.ts"));
-      workers.push(worker);
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      worker
-        .run(embed, block["text"])
-        .then((result) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          results.embeddings.push(result);
-
-          if (results.embeddings.length === num_blocks) {
-            // All workers have completed
-            return {
-              statusCode: 200,
-              body: JSON.stringify(results),
-            };
-          }
-        })
-        .catch((err) => {
-          console.error(`Worker error: ${err}`);
-          return {
-            statusCode: 500,
-            body: JSON.stringify({ error: err.message }),
-          };
-        });
+  for (const vid of event.search_videos) {
+    for (const block of vid.blocks) {
+      const embedding = await embed(block.text);
+      results.embeddings.push({
+        embedding: embedding.data[0].embedding as number[],
+        blockId: block.blockId,
+      });
     }
   }
 
-  // const embeddings = results.embeddings.map((embedding, id) => ({
-  //   id: `test-${id}`,
-  //   vector: embedding.data[0].embedding,
-  // }));
+  const embeddingVectors: Vector[] = [];
+  for (const embedding of results.embeddings) {
+    embeddingVectors.push({
+      id: embedding.blockId.toString(),
+      values: embedding.embedding,
+    });
+  }
 
-  // figure out how to format this better
-  const embeddings: [string, number[]][] = results.embeddings.map(
-    (result, id) => [`test-${id}`, result.data[0].embedding],
-  );
+  const upsertParams = {
+    vectors: embeddingVectors,
+    namespace: db_id,
+  };
 
+  console.log(upsertParams);
   const index = pinecone.Index("block-embeddings");
   // find out what upsert takes as params
-  await index.upsert({ vectors: embeddings, namespace: db_id });
+  await index.upsert({ upsertRequest: upsertParams });
 };
