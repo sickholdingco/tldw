@@ -20,7 +20,7 @@ export const Search = ({ searchInput, setSearchInput, onSubmit }: SearchProps) =
           onKeyDown={(e) => enterPress(e, handleSubmit)}
           value={searchInput}
           onChange={(event) => setSearchInput(event.target.value)}
-          placeholder="Search..."
+          placeholder="Search like on youtube..."
         />
         <button
           className="absolute bottom-1.5 right-1 rounded p-1"

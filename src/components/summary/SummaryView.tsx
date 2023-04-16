@@ -19,7 +19,7 @@ const SummaryView = () => {
 
   return (
     <div>
-      <div className="mb-3 flex max-h-[100px] justify-between gap-5">
+      <div className="flex max-h-[100px] justify-between gap-5 pb-8">
         <Footer />
 
         <Search searchInput={searchInput} setSearchInput={setSearchInput} onSubmit={refetch} />
@@ -51,7 +51,6 @@ const SummaryView = () => {
               </>
             }
           </div>
-        
       </div>
 
       {isFetching && 

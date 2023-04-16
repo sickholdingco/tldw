@@ -25,10 +25,11 @@ export const ResultView = ({ selected, summaries }: ResultViewProps) => {
           scrollbarWidth: "thin",
         }}
       >
-        {summaries[selected]?.summaries.map((summary) => (
-          // TODO: add bullet points
-          <p key={summary.blockId}>poop</p>
-        ))}
+        <ul className="list-disc list-inside text-dimmed-200">
+          {summaries[selected]?.summaries.map((summary) => (
+            <li key={summary.blockId}>poop</li>
+          ))}
+        </ul>
       </div>
       <Separator.Root
         orientation="vertical"
