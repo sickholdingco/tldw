@@ -74,8 +74,6 @@ export const generate = async (event: Event) => {
     namespace: db_id,
   };
 
-  console.log(upsertParams);
   const index = pinecone.Index("block-embeddings");
-  // find out what upsert takes as params
   await index.upsert({ upsertRequest: upsertParams });
 };

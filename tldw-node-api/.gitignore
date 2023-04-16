@@ -4,4 +4,3 @@ node_modules
 
 # Serverless directories
 .serverless
-serverless.yml
