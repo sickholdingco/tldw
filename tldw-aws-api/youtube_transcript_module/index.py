@@ -22,37 +22,46 @@ def generateTranscript(event, context):
 	response = request.execute()
 	items = response['items']
 	search_videos = []
+	num_blocks = 0
+	block_id = 0
+
 	for item in items:
-		search_videos.append({ 
-			'videoId':  item['id']['videoId'],
-			'title': item['snippet']['title'], 
-			'thumbnail': item['snippet']['thumbnails']['high']['url']
-		})
+		try:
+			dict_list = YouTubeTranscriptApi.get_transcript(item['id']['videoId'])
+			result = ""
+			for d in dict_list:
+				result += " " + d['text']
 
-		num_blocks = 0
-		block_id = 0
-		for vid in search_videos:
-			try:
-				dict_list = YouTubeTranscriptApi.get_transcript(vid['videoId'])
-				result = ""
-				for d in dict_list:
-					result += " " + d['text']
+			n = math.ceil((len(result)/4) / 3600)
+			num_blocks += n
+			blocks = []
+			part_length = len(result) // n
+			for i in range(n):
+				blocks.append({
+					'blockId': block_id,
+					'text': result[i * part_length : (i + 1) * part_length]
+				})
+				block_id = block_id + 1
 
-				n = math.ceil((len(result)/4) / 3600)
-				num_blocks += n
-				blocks = []
-				part_length = len(result) // n
-				for i in range(n):
-					blocks.append({
-						'blockId': block_id,
-						'text': result[i * part_length : (i + 1) * part_length]
-					})
-					block_id = block_id + 1
-
-				vid['blocks'] = blocks
-			except:
-				vid['blocks'] = []
-				print('this video does not have transcription!')
+			summaries_payload = {
+				"blocks": blocks
+			}
+			summaries = client.invoke(
+					FunctionName='tldw-node-api-dev-summarizeBlocks',
+					InvocationType='RequestResponse',
+					Payload=json.dumps(summaries_payload)
+			)
+			summaryResponses = json.loads(summaries['Payload'].read())
+			search_videos.append({ 
+				'videoId':  item['id']['videoId'],
+				'title': item['snippet']['title'], 
+				'thumbnail': item['snippet']['thumbnails']['high']['url'],
+				'blocks': blocks,
+				'summaries': summaryResponses['body']
+			})
+		except:
+			search_videos['blocks'] = []
+			print('this video does not have transcription!')
 
 	db_payload = {
 		'search_videos': search_videos
@@ -73,9 +82,9 @@ def generateTranscript(event, context):
 		"db_id": json.loads(response_payload["body"])["id"]
 	}
 
-	response = client.invoke(
+	client.invoke(
 			FunctionName='tldw-node-api-dev-generateEmbeddings',
-			InvocationType='Event',
+		  InvocationType='Event',
 			Payload=json.dumps(embeddings_payload)
 	)
 
