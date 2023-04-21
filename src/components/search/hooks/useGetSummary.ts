@@ -5,6 +5,5 @@ export const useGetSummary = (searchTerm: string) => {
     { searchTerm },
     { enabled: false },
   );
-
   return summaryQuery;
 };

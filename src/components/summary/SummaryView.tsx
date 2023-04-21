@@ -19,16 +19,27 @@ const SummaryView = () => {
 
   return (
     <div>
-      <div className="flex max-h-[100px] justify-between gap-5 mb-8 pb-6 border-b border-dimmed-600">
+      <div className="mb-8 flex max-h-[100px] justify-between gap-5 border-b border-dimmed-600 pb-6">
         <Footer />
 
-        <Search searchInput={searchInput} setSearchInput={setSearchInput} onSubmit={refetch} />
-          <div className="flex w-full justify-end gap-1 max-md:w-auto">
-            {data &&
+        <Search
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
+          onSubmit={refetch}
+        />
+        <div className="flex w-full justify-end gap-1 max-md:w-auto">
+          {isError ||
+            (data && data.transcriptData.status === "error" && (
+              <div className="text-red-500">Error</div>
+            ))}
+          {data &&
+            data.transcriptData.status === "success" &&
+            !isError &&
+            !isFetching && (
               <>
-                {data.summaries.map((summary, i) => (
+                {data.transcriptData.search_videos.map((video, i) => (
                   <button
-                    key={summary.videoId}
+                    key={video.videoId}
                     onClick={() => {
                       if (selected === i) return;
                       setSelected(i);
@@ -41,7 +52,7 @@ const SummaryView = () => {
                     )}
                   >
                     <Image
-                      src={summary.thumbnail}
+                      src={video.thumbnail}
                       alt="thumbnail"
                       width={100}
                       height={100}
@@ -49,21 +60,21 @@ const SummaryView = () => {
                   </button>
                 ))}
               </>
-            }
-          </div>
+            )}
+        </div>
       </div>
 
-      {isFetching && 
-        <Loader />
-      }
+      {isFetching && <Loader />}
 
-      {!data &&
-        <InitialView />
-      }
+      {!data && !isFetching && <InitialView />}
 
-      {data &&
-        <ResultView selected={selected} summaries={data.summaries} />
-      }
+      {data && !isError && data.transcriptData.status === "success" && (
+        <ResultView
+          selected={selected}
+          videos={data.transcriptData.search_videos}
+          db_id={data.transcriptData.db_id}
+        />
+      )}
     </div>
   );
 };

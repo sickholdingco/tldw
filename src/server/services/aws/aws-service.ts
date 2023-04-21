@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import AWS from "aws-sdk";
 
-import type { VideoSummary } from "@/types";
+import type { TranscriptData, AnswerType } from "@/types";
 
 AWS.config.update({
   region: process.env.AWS_REGION,
@@ -12,7 +12,9 @@ AWS.config.update({
 
 const lambda = new AWS.Lambda();
 
-const generateTranscript = async (searchTerm: string): Promise<VideoSummary[]> => {
+const generateTranscript = async (
+  searchTerm: string,
+): Promise<TranscriptData> => {
   const params = {
     FunctionName: "tldw-aws-api-dev-youtube_transcript",
     Payload: JSON.stringify({ searchTerm }),
@@ -23,14 +25,21 @@ const generateTranscript = async (searchTerm: string): Promise<VideoSummary[]> =
   return transcript;
 };
 
-const answerQuestion = async (question: string): Promise<string> => {
+const answerQuestion = async (
+  question: string,
+  db_id: string,
+): Promise<AnswerType> => {
   const params = {
     FunctionName: "tldw-node-api-dev-pineconeQuery",
-    Payload: JSON.stringify({ question }),
+    Payload: JSON.stringify({ question, db_id }),
   };
 
   const result = await lambda.invoke(params).promise();
-  const answer = JSON.parse(result.Payload as string);
+  const answerString = JSON.parse(result.Payload as string);
+  const answer = {
+    answer: answerString,
+    db_id,
+  };
   return answer;
 };
 

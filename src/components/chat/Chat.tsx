@@ -12,38 +12,27 @@ export interface Message {
 }
 
 const messageList: Message[] = [
-  { content: "messywessy 1", isUser: false, id: "1" },
   {
-    content: "a message",
-    isUser: true,
-    id: "2",
-  },
-  {
-    content:
-      "I really like how organic sounding this feature is. Not just one part was given to the feature artist (Jungkook) but it became an ACTUAL duet collab of the two. The vocal mixture-- Charlie's crisp and Jungkook's smooth vocal style-- blends perfectly which is just amazing! Great job!For some reason, this song reminds me of East Wing Latino Laugh",
+    content: "Ask me any question relating to the videos...",
     isUser: false,
-    id: "3",
+    id: "1",
   },
 ];
 
-export const Chat = ({ className }: { className?: string }) => {
+export const Chat = ({
+  className,
+  db_id,
+}: {
+  className?: string;
+  db_id: string;
+}) => {
   const [messages, setMessages] = useState<Message[]>(messageList);
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  // const { data, isLoading, isError, isFetching, refetch } =
-  //   useAnswerQuestion(searchInput);
-
-  // const onSubmit = (e: React.SyntheticEvent) => {
-  //   e.preventDefault();
-  //   // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  //   refetch();
-  // };
 
   return (
     <div className={clsx("h-full overflow-y-auto", className)}>
       <div className="relative h-full overflow-auto">
         <MessageSection messages={messages} />
-        <ChatInput setMessages={setMessages} />
+        <ChatInput setMessages={setMessages} db_id={db_id} />
       </div>
     </div>
   );

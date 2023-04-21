@@ -7,17 +7,20 @@ import { Chat } from "../chat/Chat";
 import MobileChat from "../MobileChat";
 
 interface ResultViewProps {
-  selected: number
-  summaries: VideoSummary[]
+  db_id: string;
+  selected: number;
+  videos: VideoSummary[];
 }
 
-export const ResultView = ({ selected, summaries }: ResultViewProps) => {  
+export const ResultView = ({ selected, videos, db_id }: ResultViewProps) => {
   return (
     <div
       className="flex w-full justify-center max-md:flex-col-reverse max-md:items-center"
-      style={{
-        height: `calc(100vh - var(--top-section-height))`,
-      }}
+      style={
+        {
+          //height: `calc(100vh - var(--top-section-height))`,
+        }
+      }
     >
       <div
         className="flex h-full w-full max-w-[50%] flex-col gap-10 overflow-y-auto pr-4 text-left max-md:max-w-full max-md:pr-0"
@@ -25,9 +28,9 @@ export const ResultView = ({ selected, summaries }: ResultViewProps) => {
           scrollbarWidth: "thin",
         }}
       >
-        <ul className="list-disc list-inside text-dimmed-200">
-          {summaries[selected]?.summaries.map((summary) => (
-            <li key={summary.blockId}>poop</li>
+        <ul className="list-inside list-disc text-dimmed-200">
+          {videos[selected]?.summaries.map((summary) => (
+            <li key={summary.blockId}>{summary.summary}</li>
           ))}
         </ul>
       </div>
@@ -37,13 +40,13 @@ export const ResultView = ({ selected, summaries }: ResultViewProps) => {
       />
       <div className="flex h-full w-full max-w-[50%] flex-col gap-4 pl-4 max-md:h-auto max-md:max-w-full max-md:pl-0">
         <div>
-          <YoutubeEmbed embedId={summaries[selected]?.videoId} />
+          <YoutubeEmbed embedId={videos[selected]?.videoId} />
         </div>
         <div className="max-md:hidden max-md:flex-none">
-          <Chat />
+          <Chat db_id={db_id} />
         </div>
         <MobileChat />
       </div>
     </div>
-  )
-}
+  );
+};

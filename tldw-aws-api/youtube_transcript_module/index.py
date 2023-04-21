@@ -1,4 +1,5 @@
 import os
+import logging
 import math
 import json
 import boto3
@@ -52,16 +53,23 @@ def generateTranscript(event, context):
 					Payload=json.dumps(summaries_payload)
 			)
 			summaryResponses = json.loads(summaries['Payload'].read())
-			search_videos.append({ 
-				'videoId':  item['id']['videoId'],
-				'title': item['snippet']['title'], 
-				'thumbnail': item['snippet']['thumbnails']['high']['url'],
-				'blocks': blocks,
-				'summaries': summaryResponses['body']
-			})
-		except:
-			search_videos['blocks'] = []
-			print('this video does not have transcription!')
+			if summaryResponses['statusCode'] == 200:
+				search_videos.append({ 
+					'videoId':  item['id']['videoId'],
+					'title': item['snippet']['title'], 
+					'thumbnail': item['snippet']['thumbnails']['high']['url'],
+					'blocks': blocks,
+					'summaries': summaryResponses['body']
+				})
+			else:
+				return {
+					"status": "error",
+				}
+		except Exception as e:
+			logging.exception(e)
+			return {
+				"status": "error",
+			}
 
 	db_payload = {
 		'search_videos': search_videos
@@ -88,4 +96,10 @@ def generateTranscript(event, context):
 			Payload=json.dumps(embeddings_payload)
 	)
 
-	return search_videos
+	transcript_data = {
+		"status": "success",
+		"db_id": json.loads(response_payload["body"])["id"],
+		"search_videos": search_videos
+	}
+
+	return transcript_data
