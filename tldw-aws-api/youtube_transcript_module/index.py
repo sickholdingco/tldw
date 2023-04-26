@@ -3,8 +3,57 @@ import logging
 import math
 import json
 import boto3
+import concurrent.futures
 from youtube_transcript_api import YouTubeTranscriptApi
 from googleapiclient.discovery import build
+
+def summarize(client, item, search_videos, num_blocks, block_id):
+	try:
+		dict_list = YouTubeTranscriptApi.get_transcript(item['id']['videoId'])
+		result = ""
+		for d in dict_list:
+			result += " " + d['text']
+
+		n = math.ceil((len(result)/4) / 3600)
+		num_blocks += n
+		blocks = []
+		part_length = len(result) // n
+		for i in range(n):
+			blocks.append({
+				'blockId': block_id,
+				'text': result[i * part_length : (i + 1) * part_length]
+			})
+			block_id = block_id + 1
+
+		summaries_payload = {
+			"blocks": blocks
+		}
+		summaries = client.invoke(
+			FunctionName='tldw-node-api-dev-summarizeBlocks',
+			InvocationType='RequestResponse',
+			Payload=json.dumps(summaries_payload)
+		)
+		summaryResponses = json.loads(summaries['Payload'].read())
+		if summaryResponses['statusCode'] != 200:
+			return {
+				"status": "error",
+			}
+		else:
+			search_videos.append({ 
+				'videoId':  item['id']['videoId'],
+				'title': item['snippet']['title'], 
+				'thumbnail': item['snippet']['thumbnails']['high']['url'],
+				'blocks': blocks,
+				'summaries': summaryResponses['body']
+			})
+
+	except Exception as e:
+		logging.exception(e)
+		return {
+			"status": "error",
+		}
+	
+	return search_videos
 
 def generateTranscript(event, context):
 	client = boto3.client('lambda')
@@ -26,53 +75,17 @@ def generateTranscript(event, context):
 	num_blocks = 0
 	block_id = 0
 
+	executor = concurrent.futures.ThreadPoolExecutor(max_workers=3)
+	futures = []
 	for item in items:
-		try:
-			dict_list = YouTubeTranscriptApi.get_transcript(item['id']['videoId'])
-			result = ""
-			for d in dict_list:
-				result += " " + d['text']
+		futures.append(executor.submit(summarize, client, item, search_videos, num_blocks, block_id))
 
-			n = math.ceil((len(result)/4) / 3600)
-			num_blocks += n
-			blocks = []
-			part_length = len(result) // n
-			for i in range(n):
-				blocks.append({
-					'blockId': block_id,
-					'text': result[i * part_length : (i + 1) * part_length]
-				})
-				block_id = block_id + 1
-
-			summaries_payload = {
-				"blocks": blocks
-			}
-			summaries = client.invoke(
-					FunctionName='tldw-node-api-dev-summarizeBlocks',
-					InvocationType='RequestResponse',
-					Payload=json.dumps(summaries_payload)
-			)
-			summaryResponses = json.loads(summaries['Payload'].read())
-			if summaryResponses['statusCode'] == 200:
-				search_videos.append({ 
-					'videoId':  item['id']['videoId'],
-					'title': item['snippet']['title'], 
-					'thumbnail': item['snippet']['thumbnails']['high']['url'],
-					'blocks': blocks,
-					'summaries': summaryResponses['body']
-				})
-			else:
-				return {
-					"status": "error",
-				}
-		except Exception as e:
-			logging.exception(e)
-			return {
-				"status": "error",
-			}
+	results = {
+		"search_videos": [future.result() for future in futures],
+	}
 
 	db_payload = {
-		'search_videos': search_videos
+		'search_videos': results['search_videos']
 	}
 
 	# calling our db api to create an item

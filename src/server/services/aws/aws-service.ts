@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import AWS from "aws-sdk";
 
-import type { TranscriptData, AnswerType } from "@/types";
+import type { TranscriptData, AnswerType, Message } from "@/types";
 
 AWS.config.update({
   region: process.env.AWS_REGION,
@@ -26,12 +26,12 @@ const generateTranscript = async (
 };
 
 const answerQuestion = async (
-  question: string,
+  messages: Message[],
   db_id: string,
 ): Promise<AnswerType> => {
   const params = {
     FunctionName: "tldw-node-api-dev-pineconeQuery",
-    Payload: JSON.stringify({ question, db_id }),
+    Payload: JSON.stringify({ messages, db_id }),
   };
 
   const result = await lambda.invoke(params).promise();

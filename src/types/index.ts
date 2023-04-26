@@ -1,5 +1,3 @@
-import type { ChatCompletionResponseMessage } from "openai";
-
 export type OpenAIResponseType = {
   result: string;
 };
@@ -41,6 +39,15 @@ export type VideoType = {
 };
 
 export type AnswerType = {
-  answer: string;
+  answer: {
+    statusCode: number;
+    body: string;
+  };
   db_id: string;
+};
+
+export type Message = {
+  content: string;
+  isUser: boolean;
+  id: string;
 };

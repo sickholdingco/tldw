@@ -1,39 +1,52 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useAnswerQuestion } from "./hooks/useAnswerQuestion";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
-import { type Message } from "./Chat";
+import { type Message } from "@/types";
 import { enterPress } from "../../utils/helperFunctions/enterPress";
 
 interface ChatInputProps {
+  messages: Message[];
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   db_id: string;
 }
 
 const ChatInput = (props: ChatInputProps) => {
-  const { setMessages } = props;
+  const { messages, setMessages } = props;
   const [question, setQuestion] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data, isLoading, isError, isFetching, refetch } = useAnswerQuestion(
-    question,
+    messages,
     props.db_id,
   );
-
+  console.log(data);
   useEffect(() => {
     if (data) {
       setMessages((prevMessages) => [
         ...prevMessages,
-        { id: Date.now().toString(), content: data.answer.body, isUser: false },
+        {
+          id: Date.now().toString(),
+          content: data.answer.body,
+          isUser: false,
+        },
       ]);
     }
   }, [data]);
 
   const handleSubmit = async () => {
     if (question !== "") {
-      await refetch();
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { id: Date.now().toString(), content: question, isUser: true },
-      ]);
+      const message = {
+        id: Date.now().toString(),
+        content: question,
+        isUser: true,
+      };
+      setQuestion("");
+      setMessages((prevMessages) => [...prevMessages, message]);
+
+      const messagesArray = messages;
+      messagesArray.push(message);
+      await refetch({
+        queryKey: [messages, props.db_id],
+      });
     }
 
     setQuestion("");

@@ -1,23 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import ChatInput from "./ChatInput";
-import { useAnswerQuestion } from "./hooks/useAnswerQuestion";
+import { type Message } from "@/types";
 import MessageSection from "./MessageSection";
 import clsx from "clsx";
 
-export interface Message {
-  content: string;
-  isUser: boolean;
-  id: string;
-}
-
-const messageList: Message[] = [
-  {
-    content: "Ask me any question relating to the videos...",
-    isUser: false,
-    id: "1",
-  },
-];
+const messageList: Message[] = [];
 
 export const Chat = ({
   className,
@@ -32,7 +20,11 @@ export const Chat = ({
     <div className={clsx("h-full overflow-y-auto", className)}>
       <div className="relative h-full overflow-auto">
         <MessageSection messages={messages} />
-        <ChatInput setMessages={setMessages} db_id={db_id} />
+        <ChatInput
+          messages={messages}
+          setMessages={setMessages}
+          db_id={db_id}
+        />
       </div>
     </div>
   );

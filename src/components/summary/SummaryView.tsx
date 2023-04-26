@@ -19,7 +19,7 @@ const SummaryView = () => {
 
   return (
     <div>
-      <div className="mb-8 flex max-h-[100px] justify-between gap-5 border-b border-dimmed-600 pb-6">
+      <div className="mb-8 flex h-[100px] max-h-[100px] justify-between gap-5 border-b border-dimmed-600 pb-6">
         <Footer />
 
         <Search

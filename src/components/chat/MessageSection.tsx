@@ -1,6 +1,6 @@
 import Message from "./Message";
 import { Fragment, useEffect, useRef } from "react";
-import type { Message as MessageType } from "./Chat";
+import type { Message as MessageType } from "@/types";
 
 const AlwaysScrollToBottom = () => {
   const elementRef = useRef<HTMLDivElement>(null);

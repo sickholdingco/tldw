@@ -1,8 +1,8 @@
 import { api } from "@/utils/api";
-
-export const useAnswerQuestion = (question: string, db_id: string) => {
+import type { Message } from "@/types";
+export const useAnswerQuestion = (messages: Message[], db_id: string) => {
   const embeddingQuery = api.answer.useQuery(
-    { question, db_id },
+    { messages, db_id },
     { enabled: false },
   );
 

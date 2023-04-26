@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --top-section-height: calc(100px + 1.25rem + 1.5rem + 1px);
+  --top-section-height: calc(132px + 1.25rem + 1.5rem + 1px);
 }
 
 @layer base {

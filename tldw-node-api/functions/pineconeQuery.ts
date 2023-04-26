@@ -3,14 +3,21 @@ import { chat } from "./chat";
 import { embed } from "./embed";
 const AWS = require("aws-sdk");
 
+interface Message {
+  content: string;
+  isUser: boolean;
+  id: string;
+}
 interface Event {
   db_id: string;
-  question: string;
+  messages: Message[];
 }
 
 const indexName = "block-embeddings";
 
 export const generate = async (event: Event) => {
+  console.log("Messages");
+  console.log(event.messages);
   const lambda = new AWS.Lambda();
   const pinecone = new PineconeClient();
   // Initialize the client
@@ -30,7 +37,7 @@ export const generate = async (event: Event) => {
   }
   const index = pinecone.Index(indexName);
 
-  const embedding = await embed(event.question);
+  const embedding = await embed("test");
 
   const queryRequest: QueryRequest = {
     topK: 1,
@@ -61,7 +68,7 @@ export const generate = async (event: Event) => {
   for (const vid of parsedSearch) {
     for (const block of vid.blocks) {
       if (block.blockId.toString() === matchingBlockId) {
-        const answer = await chat(event.question, block.text);
+        const answer = await chat("test", block.text);
         return {
           statusCode: 200,
           body: JSON.stringify(answer),
