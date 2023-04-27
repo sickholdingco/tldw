@@ -16,7 +16,6 @@ interface Video {
 
 interface Event {
   db_id: string;
-  num_blocks: number;
   search_videos: Video[];
 }
 

@@ -16,8 +16,6 @@ interface Event {
 const indexName = "block-embeddings";
 
 export const generate = async (event: Event) => {
-  console.log("Messages");
-  console.log(event.messages);
   const lambda = new AWS.Lambda();
   const pinecone = new PineconeClient();
   // Initialize the client
@@ -37,7 +35,8 @@ export const generate = async (event: Event) => {
   }
   const index = pinecone.Index(indexName);
 
-  const embedding = await embed("test");
+  const question = event.messages[event.messages.length - 1].content;
+  const embedding = await embed(question);
 
   const queryRequest: QueryRequest = {
     topK: 1,
@@ -68,7 +67,7 @@ export const generate = async (event: Event) => {
   for (const vid of parsedSearch) {
     for (const block of vid.blocks) {
       if (block.blockId.toString() === matchingBlockId) {
-        const answer = await chat("test", block.text);
+        const answer = await chat(event.messages, block.text);
         return {
           statusCode: 200,
           body: JSON.stringify(answer),
@@ -76,8 +75,4 @@ export const generate = async (event: Event) => {
       }
     }
   }
-  return {
-    statusCode: 200,
-    body: "No matching block found",
-  };
 };

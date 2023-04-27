@@ -26,7 +26,7 @@ export const ResultView = ({ selected, videos, db_id }: ResultViewProps) => {
           scrollbarWidth: "thin",
         }}
       >
-        <ul className="list-inside list-disc text-dimmed-200">
+        <ul className="list-inside list-none text-dimmed-200">
           {videos[selected]?.summaries.map((summary) => (
             <li key={summary.blockId}>{summary.summary}</li>
           ))}

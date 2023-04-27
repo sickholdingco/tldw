@@ -3,6 +3,7 @@ import { useAnswerQuestion } from "./hooks/useAnswerQuestion";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 import { type Message } from "@/types";
 import { enterPress } from "../../utils/helperFunctions/enterPress";
+import { api } from "@/utils/api";
 
 interface ChatInputProps {
   messages: Message[];
@@ -13,12 +14,10 @@ interface ChatInputProps {
 const ChatInput = (props: ChatInputProps) => {
   const { messages, setMessages } = props;
   const [question, setQuestion] = useState("");
+  const utils = api.useContext();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { data, isLoading, isError, isFetching, refetch } = useAnswerQuestion(
-    messages,
-    props.db_id,
-  );
-  console.log(data);
+  const { data, isLoading, isError, isFetching, status, refetch } =
+    useAnswerQuestion(messages, props.db_id);
   useEffect(() => {
     if (data) {
       setMessages((prevMessages) => [
@@ -30,7 +29,7 @@ const ChatInput = (props: ChatInputProps) => {
         },
       ]);
     }
-  }, [data]);
+  }, [data, setMessages]);
 
   const handleSubmit = async () => {
     if (question !== "") {
@@ -44,8 +43,12 @@ const ChatInput = (props: ChatInputProps) => {
 
       const messagesArray = messages;
       messagesArray.push(message);
+      await utils.answer.invalidate({
+        messages: messagesArray,
+        db_id: props.db_id,
+      });
       await refetch({
-        queryKey: [messages, props.db_id],
+        queryKey: [messagesArray, props.db_id],
       });
     }
 

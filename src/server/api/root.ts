@@ -20,11 +20,11 @@ export const appRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       try {
-        // const transcriptData = await AwsService.generateTranscript(
-        //   input.searchTerm,
-        // );
+        const transcriptData = await AwsService.generateTranscript(
+          input.searchTerm,
+        );
         return {
-          transcriptData: Mock.transcriptData,
+          transcriptData,
         };
       } catch (err) {
         throw new TRPCError({
@@ -48,16 +48,15 @@ export const appRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       try {
-        // const answer = await AwsService.answerQuestion(
-        //   input.messages,
-        //   input.db_id,
-        // );
-        // console.log(answer);
-        const data = {
-          statusCode: 200,
-          body: "\"Based on the given context, it is the author's opinion that Michael O'Hearn is not a natural bodybuilder and is most likely using steroids. However, the author acknowledges that O'Hearn has worked hard and has good genetics.\"",
-        };
-        return data;
+        const answer = await AwsService.answerQuestion(
+          input.messages,
+          input.db_id,
+        );
+        // const data = {
+        //   statusCode: 200,
+        //   body: "\"Based on the given context, it is the author's opinion that Michael O'Hearn is not a natural bodybuilder and is most likely using steroids. However, the author acknowledges that O'Hearn has worked hard and has good genetics.\"",
+        // };
+        return answer;
       } catch (err) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
