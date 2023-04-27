@@ -2,9 +2,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import Mock from "../../mock.json";
 import AwsService from "../services/aws/aws-service";
-import { type Message } from "@/types";
 
 /**
  * This is the primary router for your server.

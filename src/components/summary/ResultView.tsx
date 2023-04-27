@@ -43,7 +43,7 @@ export const ResultView = ({ selected, videos, db_id }: ResultViewProps) => {
         <div className="flex-1 overflow-y-auto max-md:hidden max-md:flex-none">
           <Chat db_id={db_id} />
         </div>
-        <MobileChat />
+        <MobileChat db_id={db_id} />
       </div>
     </div>
   );
