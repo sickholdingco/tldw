@@ -25,6 +25,7 @@ const SummaryView = () => {
         <Search
           searchInput={searchInput}
           setSearchInput={setSearchInput}
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSubmit={refetch}
         />
         <div className="flex w-full justify-end gap-1 max-md:w-auto">
