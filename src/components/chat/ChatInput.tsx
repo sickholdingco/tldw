@@ -31,7 +31,7 @@ const ChatInput = (props: ChatInputProps) => {
     }
   }, [data, setMessages]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (question !== "") {
       const message = {
         id: Date.now().toString(),
@@ -43,13 +43,19 @@ const ChatInput = (props: ChatInputProps) => {
 
       const messagesArray = messages;
       messagesArray.push(message);
-      await utils.answer.invalidate({
-        messages: messagesArray,
-        db_id: props.db_id,
-      });
-      await refetch({
-        queryKey: [messagesArray, props.db_id],
-      });
+      utils.answer
+        .invalidate({
+          messages: messagesArray,
+          db_id: props.db_id,
+        })
+        .then(() => {
+          void refetch({
+            queryKey: [messagesArray, props.db_id],
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
 
     setQuestion("");

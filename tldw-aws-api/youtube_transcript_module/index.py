@@ -53,12 +53,11 @@ def generateTranscript(event, context):
 	api_key = os.environ["YOUTUBE_API_KEY"]
 	youtube = build('youtube','v3',developerKey = api_key)
 	prompt = event['searchTerm']
-	search_filters = {'videoCaption': 'closedCaption'}
 	request = youtube.search().list(
 		part="snippet",
 		maxResults=3,
 		type="video",
-		videoCaption=search_filters['videoCaption'],
+		videoCaption="closedCaption",
 		q=prompt
 	)	
 	response = request.execute()

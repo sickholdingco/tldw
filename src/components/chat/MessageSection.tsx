@@ -19,9 +19,12 @@ const MessageSection = (props: ChatLayoutProps) => {
     <div className="flex h-full flex-col gap-3 overflow-auto">
       <div className="flex-1 space-y-4 overflow-y-auto px-2">
         {messages?.map((message) => {
+          const formattedMessage = message
+            ? message.content.replace(/['"\\]+/g, "")
+            : "";
           return (
             <Fragment key={message.id}>
-              <Message isUser={message.isUser}>{message.content}</Message>
+              <Message isUser={message.isUser}>{formattedMessage}</Message>
               <AlwaysScrollToBottom />
             </Fragment>
           );
