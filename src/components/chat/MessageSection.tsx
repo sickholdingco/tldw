@@ -14,7 +14,7 @@ interface ChatLayoutProps {
 
 const MessageSection = (props: ChatLayoutProps) => {
   const { messages } = props;
-
+  console.log("poop");
   return (
     <div className="flex h-full flex-col gap-3 overflow-auto">
       <div className="flex-1 space-y-4 overflow-y-auto px-2">
