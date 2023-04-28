@@ -3,9 +3,14 @@ import { chat } from "./chat";
 import { embed } from "./embed";
 const AWS = require("aws-sdk");
 
+interface Message {
+  content: string;
+  isUser: boolean;
+  id: string;
+}
 interface Event {
   db_id: string;
-  question: string;
+  messages: Message[];
 }
 
 const indexName = "block-embeddings";
@@ -30,7 +35,8 @@ export const generate = async (event: Event) => {
   }
   const index = pinecone.Index(indexName);
 
-  const embedding = await embed(event.question);
+  const question = event.messages[event.messages.length - 1].content;
+  const embedding = await embed(question);
 
   const queryRequest: QueryRequest = {
     topK: 1,
@@ -61,7 +67,7 @@ export const generate = async (event: Event) => {
   for (const vid of parsedSearch) {
     for (const block of vid.blocks) {
       if (block.blockId.toString() === matchingBlockId) {
-        const answer = await chat(event.question, block.text);
+        const answer = await chat(event.messages, block.text);
         return {
           statusCode: 200,
           body: JSON.stringify(answer),
@@ -69,8 +75,4 @@ export const generate = async (event: Event) => {
       }
     }
   }
-  return {
-    statusCode: 200,
-    body: "No matching block found",
-  };
 };

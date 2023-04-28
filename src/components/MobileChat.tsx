@@ -1,15 +1,13 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "./Dialog";
 import { Chat } from "./chat/Chat";
 
-const MobileChat = () => {
+const MobileChat = ({ db_id }: { db_id: string }) => {
   return (
     <div className="absolute bottom-10 right-10 md:hidden">
       <Dialog>
@@ -20,7 +18,7 @@ const MobileChat = () => {
           <DialogHeader>
             <DialogTitle>Chat</DialogTitle>
           </DialogHeader>
-          <Chat />
+          <Chat db_id={db_id} />
         </DialogContent>
       </Dialog>
     </div>

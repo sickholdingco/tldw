@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import AWS from "aws-sdk";
-import type { VideoType } from "@/types";
+
+import type { TranscriptData, AnswerType, Message } from "@/types";
 
 AWS.config.update({
   region: process.env.AWS_REGION,
@@ -11,15 +12,36 @@ AWS.config.update({
 
 const lambda = new AWS.Lambda();
 
-const generateTranscript = async (searchTerm: string): Promise<VideoType[]> => {
+const generateTranscript = async (
+  searchTerm: string,
+): Promise<TranscriptData> => {
   const params = {
-    FunctionName: "youtube-transcript",
+    FunctionName: "tldw-aws-api-dev-youtube_transcript",
     Payload: JSON.stringify({ searchTerm }),
   };
+
   const result = await lambda.invoke(params).promise();
   const transcript = JSON.parse(result.Payload as string);
   return transcript;
 };
 
-const AwsService = { generateTranscript };
+const answerQuestion = async (
+  messages: Message[],
+  db_id: string,
+): Promise<AnswerType> => {
+  const params = {
+    FunctionName: "tldw-node-api-dev-pineconeQuery",
+    Payload: JSON.stringify({ messages, db_id }),
+  };
+
+  const result = await lambda.invoke(params).promise();
+  const answerString = JSON.parse(result.Payload as string);
+  const answer = {
+    answer: answerString,
+    db_id,
+  };
+  return answer;
+};
+
+const AwsService = { generateTranscript, answerQuestion };
 export default AwsService;
