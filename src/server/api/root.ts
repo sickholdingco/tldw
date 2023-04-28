@@ -27,7 +27,7 @@ export const appRouter = createTRPCRouter({
       } catch (err) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to fetch summary",
+          message: err,
         });
       }
     }),
