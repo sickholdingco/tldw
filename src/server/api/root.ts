@@ -25,9 +25,10 @@ export const appRouter = createTRPCRouter({
           transcriptData,
         };
       } catch (err) {
+        console.log(err);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: err,
+          message: "Failed to fetch summary",
         });
       }
     }),
@@ -56,9 +57,10 @@ export const appRouter = createTRPCRouter({
         // };
         return answer;
       } catch (err) {
+        console.log(err);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: err,
+          message: "Failed to fetch answer",
         });
       }
     }),
