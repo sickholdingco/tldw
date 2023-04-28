@@ -1,0 +1,33 @@
+name: Enforce Pull Request Author Rules
+on:
+  pull_request:
+    types: [opened, edited, reopened]
+
+jobs:
+  enforce_author_rules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Pull Request Author
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const author = await github.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number
+            }).then(res => res.data.user.login);
+            if (author !== 'jhamilton14') {
+              await github.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                user: 'jhamilton14'
+              });
+              await github.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: `@${author} Your pull request has been modified to change the author to the specified user.`
+              });
+            }
