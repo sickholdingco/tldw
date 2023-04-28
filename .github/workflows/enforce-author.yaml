@@ -10,7 +10,7 @@ jobs:
       - name: Check Pull Request Author
         uses: actions/github-script@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PR_GITHUB_TOKEN }}
           script: |
             const author = await github.pulls.get({
               owner: context.repo.owner,
