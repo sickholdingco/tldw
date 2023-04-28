@@ -13,6 +13,7 @@ interface ResultViewProps {
 }
 
 export const ResultView = ({ selected, videos, db_id }: ResultViewProps) => {
+  console.log("our app is too expensive");
   return (
     <div
       className="flex w-full justify-center max-md:flex-col-reverse max-md:items-center"
