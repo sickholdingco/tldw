@@ -15,8 +15,8 @@ provider:
   region: us-east-2
   deploymentMethod: direct
   environment:
-    OPENAI_API_KEY: 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
-    PINECONE_API_KEY: 8a2f7a4f-c629-4339-8d65-c6d93183e23c
+    OPENAI_API_KEY: 
+    PINECONE_API_KEY: 
     PINECONE_ENVIRONMENT: us-east-1-aws
 
 functions:
