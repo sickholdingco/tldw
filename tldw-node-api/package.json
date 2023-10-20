@@ -9,7 +9,7 @@
     "@types/aws-sdk": "0.0.42",
     "@types/node": "^7.10.14",
     "serverless": "^3.7.1",
-    "serverless-plugin-typescript": "^2.1.4",
+    "serverless-plugin-typescript": "^2.1.5",
     "typescript": "^2.4.2"
   },
   "dependencies": {
